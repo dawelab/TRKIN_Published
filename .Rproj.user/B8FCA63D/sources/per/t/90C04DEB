@@ -1,0 +1,26 @@
+{
+    "id": "90C04DEB",
+    "path": "~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper/Ab10_GOTermEnrichment.R",
+    "project_path": "Ab10_GOTermEnrichment.R",
+    "type": "r_source",
+    "hash": "2573708449",
+    "contents": "",
+    "dirty": false,
+    "created": 1729034862386.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "70,0",
+        "scrollLine": "49"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1729035758,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1729035758273,
+    "read_only": false,
+    "read_only_alternatives": []
+}
