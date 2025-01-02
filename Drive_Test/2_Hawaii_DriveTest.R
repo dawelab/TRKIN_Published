@@ -158,8 +158,9 @@ qqnorm(residuals(fit1))
 
 #I am chooseing to go with this model which drops the sample with abberantly low drive and transmorms the data to reduce the skew
 #This model includes all possible variable affecting drive
-model_1 <- aov(Adj_Drive~ Column_Number + Row_Number + Edge + Sorter + Genotype, data = BOTH_sub_filt)
+model_1 <- lm(Adj_Drive~ Column_Number + Row_Number + Edge + Sorter + Genotype, data = BOTH_sub_filt)
 summary(model_1)
+gvmodelmodel1 <- gvlma(model_1)
 TukeyHSD(model_1, which="Genotype")
 
 model_1 <- aov(Drive~ Column_Number + Row_Number + Edge + Sorter + Genotype, data = BOTH_sub_filt)

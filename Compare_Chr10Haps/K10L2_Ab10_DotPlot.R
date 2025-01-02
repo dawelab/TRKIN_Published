@@ -26,6 +26,16 @@ coords$LEN2<- as.numeric(coords$LEN1)
 coords_filt <- subset(coords, `%IDY` >= 80 & LEN1 >= 2500)
 
 #####################################
+#This section calculates the average percent identity across the trkin bearing region
+#####################################
+coords_filt2 <-  subset(coords_filt, s1 >= 11227636 & e1 <= 14057185 & s2 >= 5584126 & e2 <= 9540826)
+
+#This plots the distribution of percent identity 
+hist(coords_filt2$`%IDY`)
+#This calculates the mean percent identity
+mean(coords_filt2$`%IDY`)
+
+#####################################
 #This sections generates the base of the dot plot
 #####################################
 
@@ -57,8 +67,6 @@ dotplot <- ggplot() +
   annotation_custom(Rgrob, xmin=2736860-2730186, xmax=2736860-2730186, ymin=-1000000, ymax=-1000000) +
   #TR1 Knobs
   geom_rect(mapping=aes(xmin=7429619-2730186, xmax=13957822-2730186, ymin=-2000000, ymax=-50000), alpha=0.5, fill="deepskyblue", color = NA ) +
-  annotation_custom(Tr1grob, xmin=7429619-2730186, xmax=13957822-2730186,  ymin=-2800000, ymax=-2800000) +
-  geom_rect(mapping=aes(xmin=15726572-2730186, xmax=15898240-2730186, ymin=-2000000, ymax=-50000), alpha=0.5, fill="deepskyblue", color = NA ) +
   annotation_custom(Tr1grob, xmin=15726572-2730186, xmax=15898240-2730186,  ymin=-2800000*1.4, ymax=-2800000*1.4) +
   geom_rect(mapping=aes(xmin=16787371-2730186, xmax=25024178-2730186, ymin=-2000000, ymax=-50000), alpha=0.5, fill="deepskyblue", color = NA ) +
   annotation_custom(Tr1grob, xmin=16787371-2730186, xmax=25024178-2730186,  ymin=-2800000, ymax=-2800000) +
