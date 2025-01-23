@@ -26,4 +26,4 @@ samtools merge -o $OUTDIR/Stringtie_K10L2/K10L2.AllReps.bam $BAM_LIST
 samtools sort $OUTDIR/Stringtie_K10L2/K10L2.AllReps.bam -o $OUTDIR/Stringtie_K10L2/K10L2.AllReps.s.bam
 
 #Run the genome guided assembly
-stringtie -o $OUTDIR/Stringtie_K10L2/K10L2_Stringtie_Assembly.gtf $OUTDIR/Stringtie_K10L2/K10L2.AllReps.s.bam
+stringtie -f -o $OUTDIR/Stringtie_K10L2/K10L2_Stringtie_Assembly.gtf $OUTDIR/Stringtie_K10L2/K10L2.AllReps.s.bam
