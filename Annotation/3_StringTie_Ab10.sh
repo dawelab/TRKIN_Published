@@ -15,7 +15,7 @@ module load SAMtools/1.17-GCC-12.2.0
 
 #Define the variables
 OUTDIR=/scratch/mjb51923/TRKIN_CRISPR/out_paper
-mkdir $OUTDIR/Stringtie_Ab10
+#mkdir $OUTDIR/Stringtie_Ab10
 BAMDIR=/scratch/mjb51923/TRKIN_CRISPR/out_paper/Hisat2
 
 #Merge all the bam files 
