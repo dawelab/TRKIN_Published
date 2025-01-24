@@ -7,7 +7,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=24
 #SBATCH --mem=200gb
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 
 #Load the modules
 module load Trinity/2.15.1-foss-2022a
@@ -15,15 +15,15 @@ module load Trinity/2.15.1-foss-2022a
 #Define the variables
 OUTDIR=/scratch/mjb51923/TRKIN_CRISPR/out_paper
 mkdir $OUTDIR/Trinity_Denovo_K10L2
-READDIR=/scratch/mjb51923/raw_reads/RNA/K10L2
+READDIR=/scratch/mjb51923/TRKIN_CRISPR/out_paper/Trimmed_RNAseq_K10L2
 
 #List the fastq files 
-R1_LIST=$(ls $READDIR/*R1.fq.gz)
-R2_LIST=$(ls $READDIR/*R2.fq.gz)
+R1_LIST=$(ls $READDIR/*_R1_paired.fq)
+R2_LIST=$(ls $READDIR/*_R2_paired.fq)
 
 #Concatenate the fastq reads
-zcat $R1_LIST > $OUTDIR/Trinity_Denovo_K10L2/K10L2.AllReps_R1.fq
-zcat $R2_LIST > $OUTDIR/Trinity_Denovo_K10L2/K10L2.AllReps_R2.fq
+cat $R1_LIST > $OUTDIR/Trinity_Denovo_K10L2/K10L2.AllReps_R1.fq
+cat $R2_LIST > $OUTDIR/Trinity_Denovo_K10L2/K10L2.AllReps_R2.fq
 
 #Denovo assemble the K10L2 reads
 for i in "K10L2.AllReps"

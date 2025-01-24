@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=Hisat2_HifiAb10
-#SBATCH --output Hisat2_HifiAb10.%A-%a.out
+#SBATCH --output=Hisat2_HifiAb10.%A-%a.out
 #SBATCH --partition=batch
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=mjb51923@uga.edu
@@ -15,7 +15,7 @@ module load SAMtools/1.17-GCC-12.2.0
 
 #Set the file name 
 THREADS=24
-READDIR=/scratch/mjb51923/raw_reads/RNA/Gapless_B73-Ab10I
+READDIR=/scratch/mjb51923/TRKIN_CRISPR/out_paper/Trimmed_RNAseq_Ab10
 OUT=/scratch/mjb51923/TRKIN_CRISPR/out_paper
 
 #Make the output directory and enter it
@@ -34,7 +34,7 @@ REF=$OUT/RepeatMasker/Ab10_HiFi_v2_corrected.fa.masked
 #Build a hisat2 reference
 #I ran this command separatly first to avoid having the reference re built every time
 #hisat2-build $REF Ab10_HiFi_v2_corrected.fa.masked
-hisat2 -x $OUT/Hisat2/Ab10_HiFi_v2_corrected.fa.masked -p $THREADS -1 $READDIR/${NAME}_R1.fq.gz -2 $READDIR/${NAME}_R2.fq.gz -S $OUT/Hisat2/${NAME}.sam
+hisat2 -x $OUT/Hisat2/Ab10_HiFi_v2_corrected.fa.masked -p $THREADS -1 $READDIR/${NAME}_R1_paired.fq -2 $READDIR/${NAME}_R2_paired.fq -S $OUT/Hisat2/${NAME}.sam
 samtools view -bS $OUT/Hisat2/${NAME}.sam > $OUT/Hisat2/${NAME}.bam
 samtools sort $OUT/Hisat2/${NAME}.bam -o $OUT/Hisat2/${NAME}.s.bam
 
