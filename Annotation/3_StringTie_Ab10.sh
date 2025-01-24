@@ -26,4 +26,4 @@ samtools merge -o $OUTDIR/Stringtie_Ab10/B73Ab10_AllTissues.bam $BAM_LIST
 samtools sort $OUTDIR/Stringtie_Ab10/B73Ab10_AllTissues.bam -o $OUTDIR/Stringtie_Ab10/B73Ab10_AllTissues.s.bam
 
 #Run the genome guided assembly
-stringtie -f -o $OUTDIR/Stringtie_Ab10/B73Ab10_Stringtie_Assembly.gtf $OUTDIR/Stringtie_Ab10/B73Ab10_AllTissues.s.bam
+stringtie -o $OUTDIR/Stringtie_Ab10/B73Ab10_Stringtie_Assembly.gtf $OUTDIR/Stringtie_Ab10/B73Ab10_AllTissues.s.bam

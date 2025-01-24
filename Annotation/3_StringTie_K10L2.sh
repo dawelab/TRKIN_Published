@@ -22,8 +22,8 @@ BAMDIR=/scratch/mjb51923/TRKIN_CRISPR/out_paper/K10L2_Hisat2
 BAM_LIST=$(ls $BAMDIR/*.s.bam)
 
 #Merge all the bam files together
-#samtools merge -o $OUTDIR/Stringtie_K10L2/K10L2.AllReps.bam $BAM_LIST
-#samtools sort $OUTDIR/Stringtie_K10L2/K10L2.AllReps.bam -o $OUTDIR/Stringtie_K10L2/K10L2.AllReps.s.bam
+samtools merge -o $OUTDIR/Stringtie_K10L2/K10L2.AllReps.bam $BAM_LIST
+samtools sort $OUTDIR/Stringtie_K10L2/K10L2.AllReps.bam -o $OUTDIR/Stringtie_K10L2/K10L2.AllReps.s.bam
 
 #Run the genome guided assembly
 stringtie -o $OUTDIR/Stringtie_K10L2/K10L2_Stringtie_Assembly.gtf $OUTDIR/Stringtie_K10L2/K10L2.AllReps.s.bam
