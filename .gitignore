@@ -2,3 +2,4 @@
 RM_*
 .Rproj
 *.log
+.Rproj.user
