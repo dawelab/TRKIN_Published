@@ -24,13 +24,14 @@ BAM=$OUT/Hisat2
 #Make the output directory 
 #cd $OUT
 #mkdir $OUT/Braker
+cd $OUT/Braker
 
 #List the sorted bam files from the Hisat2 directory
 LIST=$(ls $BAM/*.s.bam | tr '\n' ,)
 
 #Download the orthodb protein file for plants
-#wget https://bioinf.uni-greifswald.de/bioinf/partitioned_odb11/Viridiplantae.fa.gz
-#gunzip Viridiplantae.fa.gz
+wget https://bioinf.uni-greifswald.de/bioinf/partitioned_odb11/Viridiplantae.fa.gz
+gunzip Viridiplantae.fa.gz
 
 #Run Braker. I can't add UTRs here for some reason. I can do it later
 braker.pl \

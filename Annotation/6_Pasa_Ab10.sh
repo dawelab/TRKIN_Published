@@ -21,18 +21,18 @@ cd $OUTDIR/Pasa_Ab10
 REF=$OUTDIR/RepeatMasker/Ab10_HiFi_v2_corrected.fa.masked
 
 #This loads the module again, I think there are conflicting dependencies so these need to be run immidiatly before the command 
-#module load AGAT/1.1.0
+module load AGAT/1.1.0
 #Convert the Stringtie gtf to a gff file 
-#agat_convert_sp_gxf2gxf.pl -g $OUTDIR/Stringtie_Ab10/B73Ab10_Stringtie_Assembly.gtf -o $OUTDIR/Stringtie_Ab10/B73Ab10_Stringtie_Assembly.gff3
+agat_convert_sp_gxf2gxf.pl -g $OUTDIR/Stringtie_Ab10/B73Ab10_Stringtie_Assembly.gtf -o $OUTDIR/Stringtie_Ab10/B73Ab10_Stringtie_Assembly.gff3
 #Extract the mRNA sequences from the stringtie annotation file 
-#agat_sp_extract_sequences.pl -g $OUTDIR/Stringtie_Ab10/B73Ab10_Stringtie_Assembly.gff3 -f $REF -t exon --merge -o $OUTDIR/Stringtie_Ab10/B73Ab10_Stringtie_Assembly.fasta
+agat_sp_extract_sequences.pl -g $OUTDIR/Stringtie_Ab10/B73Ab10_Stringtie_Assembly.gff3 -f $REF -t exon --merge -o $OUTDIR/Stringtie_Ab10/B73Ab10_Stringtie_Assembly.fasta
 
 #Combine the two transcriptome assemblies
-#cat $OUTDIR/Trinity_Denovo_Ab10/trinity.B73Ab10.AllTissues.Trinity.fasta $OUTDIR/Stringtie_Ab10/B73Ab10_Stringtie_Assembly.fasta > $OUTDIR/Pasa_Ab10/transcripts_B73Ab10.fasta
+cat $OUTDIR/Trinity_Denovo_Ab10/trinity.B73Ab10.AllTissues.Trinity.fasta $OUTDIR/Stringtie_Ab10/B73Ab10_Stringtie_Assembly.fasta > $OUTDIR/Pasa_Ab10/transcripts_B73Ab10.fasta
 
 #This loads the module again, I think there are conflicting dependencies so these need to be run immidiatly before the command 
-#module load PASA/2.5.3-foss-2022a
-#module load Perl/5.34.1-GCCcore-11.3.0
+module load PASA/2.5.3-foss-2022a
+module load Perl/5.34.1-GCCcore-11.3.0
 #This creates a list of the names of the denovo assembled transcripts 
 #This is the path to the installed pasa module you can find this by loading the module and running which pasa
 PASA_HOME=/apps/eb/PASA/2.5.3-foss-2022a
