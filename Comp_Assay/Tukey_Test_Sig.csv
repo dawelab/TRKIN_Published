@@ -1,0 +1,16 @@
+Comparison,diff,lwr,upr,p adj,sig
+Ab10 trkin(-) K10L2 trkin(-) / Ab10 trkin(+) K10L2 trkin(+),11.92,3.84,20.01,0.00,***
+Ab10 trkin(-) K10L2 trkin(+) / Ab10 trkin(+) K10L2 trkin(+),-8.22,-19.15,2.70,0.25, 
+Ab10 trkin(+) K10L2 trkin(-) / Ab10 trkin(+) K10L2 trkin(+),4.99,-8.64,18.62,0.89, 
+Ab10 trkin(-) N10 / Ab10 trkin(+) K10L2 trkin(+),22.48,13.39,31.56,0.00,****
+Ab10 trkin(+) N10 / Ab10 trkin(+) K10L2 trkin(+),15.06,5.72,24.40,0.00,***
+Ab10 trkin(-) K10L2 trkin(+) / Ab10 trkin(-) K10L2 trkin(-),-20.14,-31.23,-9.06,0.00,****
+Ab10 trkin(+) K10L2 trkin(-) / Ab10 trkin(-) K10L2 trkin(-),-6.93,-20.69,6.82,0.68, 
+Ab10 trkin(-) N10 / Ab10 trkin(-) K10L2 trkin(-),10.56,1.28,19.83,0.02,*
+Ab10 trkin(+) N10 / Ab10 trkin(-) K10L2 trkin(-),3.14,-6.38,12.67,0.93, 
+Ab10 trkin(+) K10L2 trkin(-)  / Ab10 trkin(-) K10L2 trkin(+),13.21,-2.39,28.81,0.14, 
+Ab10 trkin(-) N10 / Ab10 trkin(-) K10L2 trkin(+),30.70,18.87,42.54,0.00,****
+Ab10 trkin(+) N10 / Ab10 trkin(-) K10L2 trkin(+),23.29,11.26,35.32,0.00,****
+Ab10 trkin(-) N10 / Ab10 trkin(+) K10L2 trkin(-),17.49,3.13,31.86,0.01,**
+Ab10 trkin(+) N10 / Ab10 trkin(+) K10L2 trkin(-),10.08,-4.45,24.61,0.33, 
+Ab10 trkin(+) N10 / Ab10 trkin(-) N10,-7.41,-17.80,2.97,0.30, 

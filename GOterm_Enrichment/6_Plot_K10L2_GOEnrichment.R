@@ -5,6 +5,8 @@ library(RColorBrewer)
 library(grid)
 library(egg)
 
+setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/GOterm_Enrichment")
+
 K10L2_GFF <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/CI66_K10L2_v1.gene.v2.gff3", header = FALSE)
 colnames(K10L2_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
@@ -43,7 +45,7 @@ DATA_MF <- new("topGOdata", description="K10L2", ontology = "MF", allGenes = gen
 DATA_CC <- new("topGOdata", description="K10L2", ontology = "CC", allGenes = geneList, nodeSize = 10, annot = annFUN.file, file = "K10L2_GOMapping.tbl")
 
 #This loads in the 10 most enriched GO terms for each category
-ENR <- read.csv("K10L2_GOTermEnrichment.csv")
+ENR <- read.csv("3.2_K10L2_GOTermEnrichment.csv")
 ENR$Type <- gsub("Biological Process", "DATA_BP", ENR$Type)
 ENR$Type <- gsub("Cellular Component", "DATA_CC", ENR$Type)
 ENR$Type <- gsub("Molecular Function", "DATA_MF", ENR$Type)
@@ -95,30 +97,28 @@ MERGE_GO_ALL <- MERGE_GO_ALL[order(MERGE_GO_ALL$enrich, decreasing = TRUE),]
 #This defines it as a factor to maintain the ordering
 MERGE_GO_ALL$term <- factor(MERGE_GO_ALL$term, levels=rev(unique(MERGE_GO_ALL$term)))
 
-#I am adding these empty lines to balance out the plot
-ADD <- data.frame("chr"=rep("K10L2",8), "start"=rep(NA,8), "end"=rep(NA,8), "term"=c(" ", "  ", "   ", "    ", "     ", "      ", "       ", "        "), "enrich"=rep(NA,8), "p"=rep(NA,8), "logp"=rep(NA,8), "type"=rep("Molecular\n Function",8))
-MERGE_GO_ALL <- rbind(MERGE_GO_ALL, ADD)
 
-
-pdf("K10L2_GOterm_Enrichment.pdf", height=4, width=10)
+pdf("K10L2_GOterm_Enrichment.pdf", height=10, width=5)
 p <- ggplot() +
-  geom_point(data=MERGE_GO_ALL, aes(x=start, y=term, color=as.numeric(enrich), size=logp), shape=4) +
+  geom_point(data=MERGE_GO_ALL, aes(y=start, x=term, color=as.numeric(enrich), size=logp), shape=4) +
   scale_colour_viridis_c(option = "turbo" , direction=1, breaks = c(24.4, 26.19), labels = c("24","26"), begin = 0, end=0.9) +
-  labs(y="Enriched GO Term", x= "K10L2", color = "Fold Enrichment", size = "-log(p)") +
-  xlim(2730186, 31891546) + 
-  facet_grid(vars(type), scales = "free_y") +
-  theme(legend.position = "bottom", ncol=1, nrow=3, axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.title = element_text(size=20), axis.text = element_text(size=10), strip.text.y.right = element_text(size = 15)) +
+  scale_x_discrete(guide = guide_axis(angle = 90)) +
+  labs(x="Enriched GO Term", y= "K10L2", color = "Fold\n Enrich.", size = "-log(p)") +
+  ylim(2730186, 31891546) + 
+  facet_grid(vars(type), scales = "free_x") +
+  theme_dark() +
+  theme(legend.position = "right", ncol=1, nrow=3, axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title = element_text(size=19), axis.text = element_text(size=14), strip.text.x.right = element_text(size = 15)) +
   #####################K10L2 Annotations
   ####TR1 Knob1
-  annotate("rect", xmin=7429619, xmax=13957822, ymin=-1, ymax=-2, alpha=0.5, fill="deepskyblue") +
-  annotate("rect", xmin=15726572, xmax=15898240, ymin=-1, ymax=-2, alpha=0.5, fill="deepskyblue" ) +
-  annotate("rect", xmin=16787371, xmax=25024178, ymin=-1, ymax=-2, alpha=0.5, fill="deepskyblue" ) +
-  annotate("rect", xmin=25498094, xmax=25502283, ymin=-1, ymax=-2, alpha=0.5, fill="deepskyblue" ) +
+  annotate("rect", ymin=7429619, ymax=13957822, xmin=-1, xmax=-2, alpha=0.5, fill="deepskyblue") +
+  annotate("rect", ymin=15726572, ymax=15898240, xmin=-1, xmax=-2, alpha=0.5, fill="deepskyblue" ) +
+  annotate("rect", ymin=16787371, ymax=25024178, xmin=-1, xmax=-2, alpha=0.5, fill="deepskyblue" ) +
+  annotate("rect", ymin=25498094, ymax=25502283, xmin=-1, xmax=-2, alpha=0.5, fill="deepskyblue" ) +
   ######Shared Region
-  annotate("rect", xmin=2730186, xmax=7429619, ymin=-1, ymax=-2, alpha=0.5, fill="darkgoldenrod1" ) +
-  annotate("rect", xmin=25502283, xmax=31891546, ymin=-1, ymax=-2, alpha=0.5, fill="darkgoldenrod1" ) +
+  annotate("rect", ymin=2730186, ymax=7429619, xmin=-1, xmax=-2, alpha=0.5, fill="darkgoldenrod1" ) +
+  annotate("rect", ymin=25502283, ymax=31891546, xmin=-1, xmax=-2, alpha=0.5, fill="darkgoldenrod1" ) +
   #######trkin
-  annotate("rect", xmin=16328801, xmax=16357145, ymin=-1, ymax=-2, fill="blue" ) +
+  annotate("rect", ymin=16328801, ymax=16357145, xmin=-1, xmax=-2, fill="blue" ) +
   coord_cartesian(clip="off")
 
 p

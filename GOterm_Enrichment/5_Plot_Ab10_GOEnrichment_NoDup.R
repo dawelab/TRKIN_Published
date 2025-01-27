@@ -5,8 +5,7 @@ library(RColorBrewer)
 library(grid)
 library(egg)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper")
-
+setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/GOterm_Enrichment")
 
 Ab10_GFF <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/HiFiAb10.genes.edit.gff3", header = FALSE)
 #This drops an unnecessary column at the top
@@ -56,7 +55,7 @@ DATA_MF <- new("topGOdata", description="Ab10", ontology = "MF", allGenes = gene
 DATA_CC <- new("topGOdata", description="Ab10", ontology = "CC", allGenes = geneList, nodeSize = 10, annot = annFUN.file, file = "Ab10_GOMapping.tbl")
 
 #This loads in the 10 most enriched GO terms for each category
-ENR <- read.csv("Ab10_GOTermEnrichment_NoDup.csv")
+ENR <- read.csv("2.2_Ab10_GOTermEnrichment_NoDup.csv")
 ENR$Type <- gsub("Biological Process", "DATA_BP", ENR$Type)
 ENR$Type <- gsub("Cellular Component", "DATA_CC", ENR$Type)
 ENR$Type <- gsub("Molecular Function", "DATA_MF", ENR$Type)
@@ -105,30 +104,32 @@ MERGE_GO_ALL <- MERGE_GO_ALL[order(MERGE_GO_ALL$enrich, decreasing = TRUE),]
 #This defines it as a factor to maintain the ordering
 MERGE_GO_ALL$term <- factor(MERGE_GO_ALL$term, levels=rev(unique(MERGE_GO_ALL$term)))
 
-pdf("Ab10_GOterm_Enrichment_NoDup.pdf", height=7, width=10)
+pdf("Ab10_GOterm_Enrichment_NoDup.pdf", height=10, width=7)
 p <- ggplot() +
-  geom_point(data=MERGE_GO_ALL, aes(x=start, y=term, color=as.numeric(enrich), size=logp), shape=4) +
-  scale_colour_viridis_c(option = "turbo" , direction=1, breaks = c(255.6, 281), labels = c("255","281"), begin = 0, end=0.9) +
-  labs(y="Enriched GO Term", x= "Abnormal Chromosome 10", color = "Fold Enrichment", size = "-log(p)") +
-  xlim(141115174, 195055488) + 
-  facet_grid(vars(type), scales = "free_y") +
-  theme(legend.position = "bottom", ncol=1, nrow=3, axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.title = element_text(size=20), axis.text = element_text(size=10), strip.text.y.right = element_text(size = 15)) +
+  geom_point(data=MERGE_GO_ALL, aes(x=term, y=start, color=as.numeric(enrich), size=logp), shape=4) +
+  scale_colour_viridis_c(option = "turbo" , direction=1, begin = 0, end=0.9) +
+  scale_x_discrete(guide = guide_axis(angle = 90)) +
+  labs(x="Enriched GO Term", y="Abnormal Chromosome 10", color ="Fold\n Enrich.", size ="-log(p)") +
+  ylim(141115174, 195055488) + 
+  facet_grid(vars(type), scales = "free_x") +
+  theme_dark() +
+  theme(legend.position = "bottom", ncol=1, nrow=3, axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title = element_text(size=19), axis.text.x = element_text(size=14), strip.text.y.right = element_text(size = 15)) +
   #####################Ab10 Annotations
   ####TR1 Knob1
-  annotate("rect", xmin=142472000, xmax=146699300, ymin=-1, ymax=-2, alpha=0.5, fill="deepskyblue") +
-  annotate("rect", xmin=150656000, xmax=153145000, ymin=-1, ymax=-2, alpha=0.5, fill="deepskyblue" ) +
-  annotate("rect", xmin=157485200, xmax=159356550, ymin=-1, ymax=-2, alpha=0.5, fill="deepskyblue" ) +
-  #####Knob 180
-  annotate("rect", xmin=174433450, xmax=182846100, ymin=-1, ymax=-2, alpha=0.5, fill="darkorange3" ) +
+  annotate("rect", ymin=142472000, ymax=146699300, xmin=-1, xmax=-2, alpha=0.5, fill="deepskyblue") +
+  annotate("rect", ymin=150656000, ymax=153145000, xmin=-1, xmax=-2, alpha=0.5, fill="deepskyblue" ) +
+  annotate("rect", ymin=157485200, ymax=159356550, xmin=-1, xmax=-2, alpha=0.5, fill="deepskyblue" ) +
+  #####Knob 18
+  annotate("rect", ymin=174433450, ymax=182846100, xmin=-1, xmax=-2, alpha=0.5, fill="darkorange3" ) +
   ######Shared Region
-  annotate("rect", xmin=141115174, xmax=142472000, ymin=-1, ymax=-2, alpha=0.5, fill="darkgoldenrod1" ) +
-  annotate("rect", xmin=152050000, xmax=156350000, ymin=-1, ymax=-2, alpha=0.5, fill="darkgoldenrod1" ) +
-  annotate("rect", xmin=158250000, xmax=166820000, ymin=-1, ymax=-2, alpha=0.5, fill="darkgoldenrod1" ) +
+  annotate("rect", ymin=141115174, ymax=142472000, xmin=-1, xmax=-2, alpha=0.5, fill="darkgoldenrod1" ) +
+  annotate("rect", ymin=152050000, ymax=156350000, xmin=-1, xmax=-2, alpha=0.5, fill="darkgoldenrod1" ) +
+  annotate("rect", ymin=158250000, ymax=166820000, xmin=-1, xmax=-2, alpha=0.5, fill="darkgoldenrod1" ) +
   #######trkin
-  annotate("rect", xmin=148964528, xmax=149082763, ymin=-1, ymax=-2, fill="blue" ) +
-  annotate("rect", xmin=150358622, xmax=150457752, ymin=-1, ymax=-2, fill="blue" ) +
+  annotate("rect", ymin=148964528, ymax=149082763, xmin=-1, xmax=-2, fill="blue" ) +
+  annotate("rect", ymin=150358622, ymax=150457752, xmin=-1, xmax=-2, fill="blue" ) +
   #######kindr
-  annotate("rect", xmin=189326066, xmax=190330226, ymin=-1, ymax=-2, alpha=0.5, fill="hotpink" ) +
+  annotate("rect", ymin=189326066, ymax=190330226, xmin=-1, xmax=-2, alpha=0.5, fill="hotpink" ) +
   coord_cartesian(clip="off")
 
 p

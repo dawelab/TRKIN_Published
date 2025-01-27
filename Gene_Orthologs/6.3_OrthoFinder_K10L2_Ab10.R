@@ -7,7 +7,7 @@ library(ggplot2)
 library(pafr)
 library(Rsamtools)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper")
+setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Gene_Orthologs")
 
 ORTHO <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/HiFiAb10.Ab10hapProtein.LongestIsoform__v__CI66_K10L2.K10L2hapProtein.LongestIsoform.tsv")
 
@@ -123,9 +123,8 @@ OrthoLink_10_temp1$Query.Sequence <- paste(OrthoLink_10_temp1$Ab10_ID, OrthoLink
 #This extracts the links between the specific regions of K10L2 and Ab10
 SPEC <- subset(OrthoLink_10_temp1, (K10L2_start >= 7429619 & K10L2_end <= 25502283) & ((Ab10_start >= 142472000 & Ab10_end <= 153145000) | (Ab10_start >= 168235374)))
 
-################
-#UPDATE THIS WHEN NEW ENTAP IS DONE
-################
+#This extracts the links between the shared regions of K10L2 and the specific regions of Ab10
+SHARE <- subset(OrthoLink_10_temp1, (K10L2_start <= 7429619 | K10L2_end >= 25502283) & ((Ab10_start >= 142472000 & Ab10_end <= 153145000) | (Ab10_start >= 168235374)))
 
 #This loads in the entap results for the Ab10 annotation
 Ab10_entap <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Ab10_entap_results.tsv")
@@ -133,8 +132,12 @@ Ab10_entap <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISP
 #This merges the SGE specific links and the entap results
 Ab10_entap_SPEC <- merge(SPEC, Ab10_entap, by="Query.Sequence")
 
-#This writes out the file
-write.csv(Ab10_entap_SPEC, "K10L2Ab10Specific_Orthologs.csv", row.names = FALSE, quote = FALSE)
+#This merges the K10L2 shared and Ab10 specific links and the entap results
+Ab10_entap_SHARE <- merge(SHARE, Ab10_entap, by="Query.Sequence")
+
+#This writes out the files
+write.csv(Ab10_entap_SPEC, "K10L2Ab10Specific_Orthologs.csv", row.names = FALSE, quote = TRUE)
+write.csv(Ab10_entap_SHARE, "K10L2ShareAb10Specific_Orthologs.csv", row.names = FALSE, quote = TRUE)
 
 #This defines the known regions for plotting 
 Uninverted <- subset(OrthoLink_10_temp1, Ab10_start < 143000000)

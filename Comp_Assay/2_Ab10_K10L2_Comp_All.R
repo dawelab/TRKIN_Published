@@ -3,7 +3,7 @@ library(tidyverse)
 library(ggplot2)
 library(ggpubr)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper")
+setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Comp_Assay")
 
 DATA_1 <- read_excel("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/Ab10_K10L2_Competition_Data_Reformat.xlsx")
 DATA_1$Round <- 1
@@ -38,6 +38,9 @@ SIG$sig <- ifelse(SIG$`p adj` <= 0.05 & SIG$`p adj` >= 0.01, "*", " ")
 SIG$sig <- ifelse(SIG$`p adj` <= 0.01 & SIG$`p adj` >= 0.001, "**", SIG$sig)
 SIG$sig <- ifelse(SIG$`p adj` <= 0.001 & SIG$`p adj` >= 0.0001, "***", SIG$sig)
 SIG$sig <- ifelse(SIG$`p adj` <= 0.0001, "****", SIG$sig)
+
+#This writes out the significance table
+write.csv(SIG, file="Tukey_Test_Sig.csv")
 
 #This converts percentage to proportion
 DATA$Prop_Drive <- DATA$R/DATA$Total
