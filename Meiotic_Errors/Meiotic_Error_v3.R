@@ -3,6 +3,8 @@ library("readxl")
 library("reshape2")
 library(gvlma)
 
+setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R\ Sessions/Paper/TRKIN_Published/Meiotic_Errors")
+
 DATA <- read_excel("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/Micronuclei_Count_format2.xlsx")
 
 DATA <- subset(DATA, Error_Type != "Minicell/Tetrad Cell")
@@ -46,7 +48,7 @@ p <- ggplot(data = DATA, aes(x=Allele)) +
   scale_x_discrete(labels=c("None (N10)", "Functional","Mutant 1","Mutant 2")) +
   scale_color_manual(values = colors) +
   guides(color = FALSE) +
-  scale_x_discrete(labels=c("trkin_mut2" = "Ab10\n1 -\n2 -", "trkin_mut1" = "Ab10\n1 -\n2 +", "trkin_functional" = "Ab10\n1 +\n2 -", "N10" = "N10")) +
+  scale_x_discrete(labels=c("trkin_mut2" = "Ab10\n1(-)\n2(-)", "trkin_mut1" = "Ab10\n1(-)\n2(+)", "trkin_functional" = "Ab10\n1(+)\n2(-)", "N10" = "N10")) +
   labs(size="Total Cell Number", x = "trkin Allele", y = "Percent Meiotic Error") +
   theme(plot.title = element_text(hjust=0.5, size = 20), axis.title = element_text(size = 18), axis.text = element_text(size = 15), legend.title = element_text(size = 18), legend.text = element_text(size = 15), plot.subtitle = element_text(hjust=0.5, size = 18), legend.position="bottom", strip.text.x = element_text(size = 18)) +
   facet_wrap(~Error_Type)
@@ -64,7 +66,7 @@ p <- ggplot(data = DATA, aes(x=Allele)) +
   scale_x_discrete(labels=c("None (N10)", "Functional","Mutant 1","Mutant 2")) +
   scale_color_manual(values = colors) +
   guides(color = FALSE) +
-  scale_x_discrete(labels=c("trkin_mut2" = "Ab10\n1 -\n2 -", "trkin_mut1" = "Ab10\n1 -\n2 +", "trkin_functional" = "Ab10\n1 +\n2 -", "N10" = "N10")) +
+  scale_x_discrete(labels=c("trkin_mut2" = "Ab10\n1(-)\n2(-)", "trkin_mut1" = "Ab10\n1(-)\n2(+)", "trkin_functional" = "Ab10\n1(+)\n2(-)", "N10" = "N10")) +
   ylim(c(0,10)) +
   labs(size="Total Cell Number", x = "trkin Allele", y = "Percent Meiotic Error", color="Meiotic Error Type") +
   theme(plot.title = element_text(hjust=0.5, size = 20), axis.title = element_text(size = 18), axis.text = element_text(size = 15), legend.title = element_text(size = 18), legend.text = element_text(size = 15), plot.subtitle = element_text(hjust=0.5, size = 18), legend.position="bottom", strip.text.x = element_text(size = 18)) +

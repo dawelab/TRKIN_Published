@@ -2,6 +2,8 @@ library(readxl)
 library(ggplot2)
 library(gvlma)
 
+setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R\ Sessions/Paper/TRKIN_Published/Homozygous_Fitness")
+
 DATA <- read_excel("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/Trkin_MappingPopulation_v2.xlsx")
 DATA$`Height (cm)` <- as.numeric(DATA$`Height (cm)`)
 DATA$`Height_Bin` <- as.factor(DATA$`Height_Bin`)
@@ -50,7 +52,7 @@ pdf("trkinGenotype_v_Height.pdf", height=4, width=4)
 ggplot(data=DATA, aes(x=Genotype, y=`Height (cm)`)) +
   geom_jitter(color="grey30", alpha=0.5) +
   geom_boxplot(alpha=0.5) +
-  scale_x_discrete(labels=c("-2 Homozygous" = "1 - 2 -\n1 - 2 -", "Het for -2 and No edit" = "1 - 2 -\n1 + 2 -", "No Edit Homozygous"="1 + 2 -\n1 + 2 -")) +
+  scale_x_discrete(labels=c("-2 Homozygous" = "1(-) 2(-)\n1(-) 2(-)", "Het for -2 and No edit" = "1(-) 2(-)\n1(+) 2(-)", "No Edit Homozygous"="1(+) 2(-)\n1(+) 2(-)")) +
   labs(y="Height (cm)", x="Ab10 trkin Genotype") +
   theme(axis.title = element_text(size = 18), axis.text = element_text(size = 15))
 dev.off()
@@ -85,7 +87,7 @@ pdf("trkinGenotype_v_TotalKernelCount.pdf", height=4, width=4)
 ggplot(data=DATA, aes(x=Genotype, y=`total kernels`)) +
   geom_jitter(color="grey30", alpha=0.5) +
   geom_boxplot(alpha=0.5) +
-  scale_x_discrete(labels=c("-2 Homozygous" = "1 - 2 -\n1 - 2 -", "Het for -2 and No edit" = "1 - 2 -\n1 + 2 -", "No Edit Homozygous"="1 + 2 -\n1 + 2 -")) +
+  scale_x_discrete(labels=c("-2 Homozygous" = "1(-) 2(-)\n1(-) 2(-)", "Het for -2 and No edit" = "1(-) 2(-)\n1(+) 2(-)", "No Edit Homozygous"="1(+) 2(-)\n1(+) 2(-)")) +
   labs(y="Kernel Number", x="Ab10 trkin Genotype") +
   theme(axis.title = element_text(size = 18), axis.text = element_text(size = 15))
 dev.off()
@@ -94,7 +96,7 @@ pdf("trkinGenotype_v_AvgKernelWeight.pdf", height=4, width=4)
 ggplot(data=DATA, aes(x=Genotype, y=as.numeric(`avg_kernel weight`))) +
   geom_jitter(color="grey30", alpha=0.5) +
   geom_boxplot(alpha=0.5) +
-  scale_x_discrete(labels=c("-2 Homozygous" = "1 - 2 -\n1 - 2 -", "Het for -2 and No edit" = "1 - 2 -\n1 + 2 -", "No Edit Homozygous"="1 + 2 -\n1 + 2 -")) +
+  scale_x_discrete(labels=c("-2 Homozygous" = "1(-) 2(-)\n1(-) 2(-)", "Het for -2 and No edit" = "1(-) 2(-)\n1(+) 2(-)", "No Edit Homozygous"="1(+) 2(-)\n1(+) 2(-)")) +
   labs(y="Average Kernel Weight", x="Ab10 trkin Genotype") +
   theme(axis.title = element_text(size = 18), axis.text = element_text(size = 15))
 dev.off()
@@ -117,7 +119,7 @@ chisq.test(TABLE)
 pdf("trkinGenotype_BarPlot.pdf", height=4, width=4) 
 ggplot(data=DATA, aes(x=Genotype)) +
   geom_bar(stat="count")+
-  scale_x_discrete(labels=c("-2 Homozygous" = "1 - 2 -\n1 - 2 -", "Het for -2 and No edit" = "1 - 2 -\n1 + 2 -", "No Edit Homozygous"="1 + 2 -\n1 + 2 -")) +
+  scale_x_discrete(labels=c("-2 Homozygous" = "1(-) 2(-)\n1(-) 2(-)", "Het for -2 and No edit" = "1(-) 2(-)\n1(+) 2(-)", "No Edit Homozygous"="1(+) 2(-)\n1(+) 2(-)")) +
   labs(x="Ab10 trkin Genotype") +
   theme(axis.title = element_text(size = 18), axis.text = element_text(size = 15), strip.text.x = element_text(size = 18))
 dev.off()

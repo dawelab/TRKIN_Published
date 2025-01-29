@@ -46,13 +46,13 @@ write.csv(SIG, file="Tukey_Test_Sig.csv")
 DATA$Prop_Drive <- DATA$R/DATA$Total
 
 #Define the names to be more readable
-x.labels <- c("Ab10\n1 + 2 -\n K10L2\n +", "Ab10\n1 - 2 -\n K10L2\n-", "Ab10\n1 - 2 -\nK10L2\n+", "Ab10\n1 + 2 -\n K10L2\n-", "Ab10\n1 - 2 -\nN10", "Ab10\n1 + 2 -\nN10")
+x.labels <- c("Ab10\n1(+) 2(-)\n K10L2\n (+)", "Ab10\n1(-) 2(-)\n K10L2\n(-)", "Ab10\n1(-) 2(-)\nK10L2\n(+)", "Ab10\n1(+) 2(-)\n K10L2\n(-)", "Ab10\n1(-) 2(-)\nN10", "Ab10\n1(+) 2(-)\nN10")
 
 pdf("Effect_Of_trkin_on_Ab10K10L2_Seg_AllComp.pdf", height = 6, width=9)
 a <- ggplot(DATA, aes(x =Genotype, y = Prop_Drive)) +
   geom_jitter(aes(x =Genotype, y = Prop_Drive, color = Round, size= Total, shape = Cas9), alpha=0.7) +
   geom_boxplot(aes(x =Genotype, y = Prop_Drive), alpha = 0.5, outlier.shape = NA) +
-  labs(x="trkin Genotype", y="Proportion Ab10-I", size = "Kernel\nNumber", color = "Season") +
+  labs(x="trkin Genotype", y="Proportion Ab10", size = "Kernel\nNumber", color = "Season") +
   scale_x_discrete(labels = x.labels) +
   scale_y_continuous(breaks = c(0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)) +
   scale_colour_viridis_d(option = "plasma", end = 0.7) +
@@ -81,7 +81,7 @@ pdf("Effect_Of_trkin_on_Ab10K10L2_Seg_FocusedComp.pdf", height = 6, width=8)
 b <- ggplot(DATA, aes(x =Genotype, y = Prop_Drive)) +
   geom_jitter(aes(x =Genotype, y = Prop_Drive, color = Round, size= Total), alpha=0.7) +
   geom_boxplot(aes(x =Genotype, y = Prop_Drive), alpha = 0.5, outlier.shape = NA) +
-  labs(x="trkin Genotype", y="Proportion Ab10-I", size = "Kernel\nNumber", color = "Season") +
+  labs(x="trkin Genotype", y="Proportion Ab10", size = "Kernel\nNumber", color = "Season") +
   scale_x_discrete(labels = x.labels) +
   scale_y_continuous(breaks = c(0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)) +
   scale_colour_viridis_d(option = "plasma", end = 0.7) +

@@ -3,7 +3,7 @@ library(ggpubr)
 library(readxl)
 library(stringr)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper")
+setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Plot_trkinGene")
 
 #I manually edited these files in excel to isolate the TE superfamily
 
@@ -95,7 +95,7 @@ ggplot() +
   annotation_custom(Ab10trkin1grob, xmin=-5000, xmax=-5000,  ymin=0, ymax=0) +
   annotation_custom(Ab10trkin2grob, xmin=-5000, xmax=-5000,  ymin=1, ymax=1) +
   annotation_custom(K10L2trkingrob, xmin=-5000, xmax=-5000,  ymin=2, ymax=2) +
-  theme(legend.position = "bottom", axis.line.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.text.x = element_text(angle = 45, vjust=0.5, size = 15)) +
+  theme(legend.position = "bottom", axis.line.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.text.x = element_text(angle = 45, vjust=0.5, size = 8)) +
   guides(color=guide_legend(ncol=3, nrow=2)) +
   coord_cartesian(clip="off")
 dev.off()

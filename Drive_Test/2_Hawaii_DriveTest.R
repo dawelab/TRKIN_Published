@@ -6,6 +6,8 @@ library(readxl)
 library(gvlma)
 library(gamlss)
 
+setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R\ Sessions/Paper/TRKIN_Published/Drive_Test")
+
 #This loads in the data from the seed counts
 DATA <- read.csv("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/Hawaii_Seed_Count.csv")
 colnames(DATA) <- c("Number", "Individual", "R_(purple)", "R_Counter", "r_(yellow)", "r_Counter", "Total", "Sorter", "Sort_Date", "Date_Counted", "Person_Counting", "Drive", "Number_Defective_Kernels", "Prop_Defective", "Defective_Date", "Defective_Number_that_Day", "Notes")
@@ -170,17 +172,17 @@ TukeyHSD(model_1, which="Genotype")
 
 Adj_Drive_Sig <- data.frame(x=c(1, 2, 3), y=c(1, 1, 1), Sig=c("a", "a", "b") )
 
-pdf("Ab10_Drive_By_trkin_Genotype.pdf", height=10, width=4)
+pdf("Ab10_Drive_By_trkin_Genotype.pdf", height=3, width=2)
 ggplot() +
   geom_jitter(data=BOTH_sub_filt, aes(x=Genotype, y=Drive), height = 0, color= "grey60", alpha=0.5) +
   geom_boxplot(data=BOTH_sub_filt, aes(x=Genotype, y=Drive), alpha=0.5, outlier.shape = NA) +
-  geom_text(data=Adj_Drive_Sig, aes(x=x, y=y, label=Sig), size = 10) +
-  scale_x_discrete(labels=c("TRKIN Mutation 2" = "1 -\n2 -", "TRKIN Mutation 1" = "1 -\n2 +", "Functional TRKIN" = "1 +\n2 -")) +
-  xlab("Ab10-I trkin Genotype") +
-  ylab("Proportion Ab10-I") +
+  geom_text(data=Adj_Drive_Sig, aes(x=x, y=y, label=Sig), size = 3) +
+  scale_x_discrete(labels=c("TRKIN Mutation 2" = "1(-)\n2(-)", "TRKIN Mutation 1" = "1(-)\n2(+)", "Functional TRKIN" = "1(+)\n2(-)")) +
+  xlab("Ab10 trkin Genotype") +
+  ylab("Proportion Ab10") +
   geom_vline(xintercept=1.5, color = "grey80", linetype="dashed", size = 0.5) +
   geom_vline(xintercept=2.5, color = "grey80", linetype="dashed", size = 0.5) +
-  theme(plot.title = element_text(hjust=0.5, size = 30), plot.subtitle = element_text(hjust=0.5, size = 10), axis.title = element_text(size = 20), axis.text.y = element_text(size = 20), axis.text.x = element_text(size = 20), legend.title = element_text(size = 20), legend.text = element_text(size = 20), legend.position = "right") 
+  theme(plot.title = element_text(hjust=0.5, size = 15), plot.subtitle = element_text(hjust=0.5, size = 10), axis.title = element_text(size = 10), axis.text.y = element_text(size = 10), axis.text.x = element_text(size = 10), legend.title = element_text(size = 10), legend.text = element_text(size = 10), legend.position = "right") 
 dev.off()
 
 #####################################
@@ -216,16 +218,16 @@ TukeyHSD(model_1, which="Sorter")
 #Only edge has a significant effect here
 #####################################
 
-pdf("KernelNumber_By_trkin_Genotype.pdf", height=10, width=4)
+pdf("KernelNumber_By_trkin_Genotype.pdf", height=3, width=2)
 ggplot() +
   geom_jitter(data=BOTH_sub_filt, aes(x=Genotype, y=Total), height = 0, color= "grey60", alpha=0.5) +
   geom_boxplot(data=BOTH_sub_filt, aes(x=Genotype, y=Total), alpha=0.5, outlier.shape = NA) +
-  scale_x_discrete(labels=c("TRKIN Mutation 2" = "1 -\n2 -", "TRKIN Mutation 1" = "1 -\n2 +", "Functional TRKIN" = "1 +\n2 -")) +
-  xlab("Ab10-I trkin Genotype") +
+  scale_x_discrete(labels=c("TRKIN Mutation 2" = "1(-)\n2(-)", "TRKIN Mutation 1" = "1(-)\n2(+)", "Functional TRKIN" = "1(+)\n2(-)")) +
+  xlab("Ab10 trkin Genotype") +
   ylab("Kernel Number") +
   geom_vline(xintercept=1.5, color = "grey80", linetype="dashed", size = 0.5) +
   geom_vline(xintercept=2.5, color = "grey80", linetype="dashed", size = 0.5) +
-  theme(plot.title = element_text(hjust=0.5, size = 30), plot.subtitle = element_text(hjust=0.5, size = 10), axis.title = element_text(size = 20), axis.text.y = element_text(size = 20), axis.text.x = element_text(size = 20), legend.title = element_text(size = 20), legend.text = element_text(size = 20), legend.position = "right") 
+  theme(plot.title = element_text(hjust=0.5, size = 15), plot.subtitle = element_text(hjust=0.5, size = 10), axis.title = element_text(size = 10), axis.text.y = element_text(size = 10), axis.text.x = element_text(size = 10), legend.title = element_text(size = 10), legend.text = element_text(size = 10), legend.position = "right") 
 dev.off()
 
 #####################################
@@ -257,15 +259,15 @@ pairwise.wilcox.test(BOTH_sub_filt$Prop_Defective, BOTH_sub_filt$Genotype)
 
 Abor_Sig <- data.frame(x=c(1, 2, 3), y=c(0.35, 0.35, 0.35), Sig=c("a", "b", "ab"))
 
-pdf("PropDefective_By_trkin_Genotype.pdf", height=10, width=4)
+pdf("PropDefective_By_trkin_Genotype.pdf", height=3, width=2)
 ggplot() +
   geom_jitter(data=BOTH_sub, aes(x=Genotype, y=Prop_Defective), color= "grey60", height = 0, alpha=0.5) +
   geom_boxplot(data=BOTH_sub, aes(x=Genotype, y=Prop_Defective), alpha=0.5, alpha=0.5, outlier.shape = NA) +
-  geom_text(data=Abor_Sig, aes(x=x, y=y, label=Sig), size = 10) +
-  scale_x_discrete(labels=c("TRKIN Mutation 2" = "1 -\n2 -", "TRKIN Mutation 1" = "1 -\n2 +", "Functional TRKIN" = "1 +\n2 -")) +
-  xlab("Ab10-I trkin Genotype") +
+  geom_text(data=Abor_Sig, aes(x=x, y=y, label=Sig), size = 3) +
+  scale_x_discrete(labels=c("TRKIN Mutation 2" = "1(-)\n2(-)", "TRKIN Mutation 1" = "1(-)\n2(+)", "Functional TRKIN" = "1(+)\n2(-)")) +
+  xlab("Ab10 trkin Genotype") +
   ylab("Proportion Defective Kernels") +
   geom_vline(xintercept=1.5, color = "grey80", linetype="dashed", size = 0.5) +
   geom_vline(xintercept=2.5, color = "grey80", linetype="dashed", size = 0.5) +
-  theme(plot.title = element_text(hjust=0.5, size = 30), plot.subtitle = element_text(hjust=0.5, size = 10), axis.title = element_text(size = 20), axis.text.y = element_text(size = 20), axis.text.x = element_text(size = 20), legend.title = element_text(size = 20), legend.text = element_text(size = 20), legend.position = "right") 
+  theme(plot.title = element_text(hjust=0.5, size = 15), plot.subtitle = element_text(hjust=0.5, size = 10), axis.title = element_text(size = 10), axis.text.y = element_text(size = 10), axis.text.x = element_text(size = 10), legend.title = element_text(size = 10), legend.text = element_text(size = 10), legend.position = "right") 
 dev.off()
