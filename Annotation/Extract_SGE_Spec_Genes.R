@@ -8,7 +8,7 @@ library(pafr)
 library(Rsamtools)
 
 #Set the working directory
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper")
+setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Annotation")
 
 #Load in the GFF files and the EnTap files for K10L2 and Ab10
 K10L2_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/CI66_K10L2.genes.edit.gff3", header = FALSE)
@@ -46,6 +46,6 @@ colnames(K10L2_SPEC) <- c("gene", "chr", "start", "end", "Frame", "Subject.Seque
 
 
 #This writes out the file
-write.csv(Ab10_SPEC, "Ab10SpecificGenes_FunctionalAnnotation.csv", row.names = FALSE, quote = FALSE)
-write.csv(K10L2_SPEC, "K10L2SpecificGenes_FunctionalAnnotation.csv", row.names = FALSE, quote = FALSE)
+write.csv(Ab10_SPEC, "Ab10SpecificGenes_FunctionalAnnotation.csv", row.names = FALSE, quote = TRUE)
+write.csv(K10L2_SPEC, "K10L2SpecificGenes_FunctionalAnnotation.csv", row.names = FALSE, quote = TRUE)
 

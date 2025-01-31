@@ -7,11 +7,11 @@ library(ggplot2)
 library(pafr)
 library(Rsamtools)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper")
+setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Gene_Orthologs")
 
 ORTHO <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.Protein.LongestIsoform__v__HiFiAb10.Ab10hapProtein.LongestIsoform.tsv")
 
-B73_GFF <- read.delim("/Volumes/Transcend/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.noheader.gff3", header = FALSE)
+B73_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.nohead.gff3", header = FALSE)
 colnames(B73_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
 Ab10_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Ab10_HiFi_v2_corrected.gene.v2.gff3", header = FALSE)
@@ -79,10 +79,6 @@ OrthoLink_10_temp1$Query.Sequence <- paste(OrthoLink_10_temp1$Ab10_ID, OrthoLink
 #This extracts the links between N10 and the Ab10 Specific region of Ab10
 Ab10_SPEC<- subset(OrthoLink_10_temp1, B73_start >= 141187279 & ((Ab10_start >= 142472000 & Ab10_end <= 153145000) | (Ab10_start >= 168235374)))
 
-################
-#UPDATE THIS WHEN NEW ENTAP IS DONE
-################
-
 #This loads in the entap results for the Ab10 annotation
 Ab10_entap <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Ab10_entap_results.tsv")
 
@@ -90,7 +86,7 @@ Ab10_entap <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISP
 Ab10_entap_SPEC<- merge(Ab10_SPEC, Ab10_entap, by="Query.Sequence")
 
 #This writes this out
-write.csv(Ab10_entap_SPEC, "N10Ab10Specific_Orthologs.csv", row.names = FALSE, quote = FALSE)
+write.csv(Ab10_entap_SPEC, "N10Ab10Specific_Orthologs.csv", row.names = FALSE, quote = TRUE)
 
 #These are the only other genes within the rpd2 repeats that are highlighted by the above file g5850.t1, g5852.t1, g5855.t1, g5857.t1, g5859.t1, g5861.t1 they are unconvincing with only one having very weak similarity to an uncharacterized protein
 
