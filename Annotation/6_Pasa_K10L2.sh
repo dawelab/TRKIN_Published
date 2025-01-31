@@ -1,18 +1,20 @@
 #!/bin/bash
 #SBATCH --job-name=Pasa_K10L2
-#SBATCH --output=Pasa_K10L2_try5.out
-#SBATCH --partition=batch_30d
+#SBATCH --output=Pasa_K10L2.out
+#SBATCH --partition=highmem_30d_p
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=mjb51923@uga.edu
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=24
-#SBATCH --mem=200gb
+#SBATCH --mem=400gb
 #SBATCH --time=240:00:00
 
 #Load the modules 
 module load PASA/2.5.3-foss-2022a
 module load AGAT/1.1.0
 module load Perl/5.34.1-GCCcore-11.3.0
+#This is needed for Pasa
+export DBI_DRIVER=SQLite
 
 #Define the variables
 OUTDIR=/scratch/mjb51923/TRKIN_CRISPR/out_paper
@@ -21,7 +23,7 @@ cd $OUTDIR/Pasa_K10L2
 REF=$OUTDIR/RepeatMasker/CI66_K10L2_v1.fasta.masked
 
 #This loads the module again, I think there are conflicting dependencies so these need to be run immidiatly before the command 
-#module load AGAT/1.1.0
+module load AGAT/1.1.0
 #Convert the Stringtie gtf to a gff file 
 #agat_convert_sp_gxf2gxf.pl -g $OUTDIR/Stringtie_K10L2/K10L2_Stringtie_Assembly.gtf -o $OUTDIR/Stringtie_K10L2/K10L2_Stringtie_Assembly.gff3
 #Extract the mRNA sequences from the stringtie annotation file 
@@ -46,21 +48,21 @@ PASA_HOME=/apps/eb/PASA/2.5.3-foss-2022a
 
 #This loads the module again, I think there are conflicting dependencies so these need to be run immidiatly before the command 
 module load PASA/2.5.3-foss-2022a
-module load Perl/5.34.1-GCCcore-11.3.0
 #Run the initial pasa step which aligns the transcripts to the reference., -C creates the db, -R runs the pipeline, -t is the transcript file, --TDN is the full length transcripts from the denovo assembly, --aligners is the aligners to use, --CPU is the threads this cannot be changed or it throws errors. 
-#Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_K10L2/alignAssembly.config -C -R -g $REF -t $OUTDIR/Pasa_K10L2/transcripts_K10L2.fasta --TDN $OUTDIR/Pasa_K10L2/tdn.accs --ALIGNERS minimap2 --CPU 2
+cd /scratch/mjb51923/TRKIN_CRISPR/out_paper/Pasa_K10L2
+Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_K10L2/alignAssembly.config -C -R -g $REF -t $OUTDIR/Pasa_K10L2/transcripts_K10L2.fasta --TDN $OUTDIR/Pasa_K10L2/tdn.accs --ALIGNERS minimap2 --CPU 2
 
 #Generate the comprehensive transcriptome database
-#$PASA_HOME/scripts/build_comprehensive_transcriptome.dbi -c $OUTDIR/Pasa_K10L2/alignAssembly.config -t $OUTDIR/Pasa_K10L2/transcripts_K10L2.fasta --min_per_ID 95 --min_per_aligned 30
+$PASA_HOME/scripts/build_comprehensive_transcriptome.dbi -c $OUTDIR/Pasa_K10L2/alignAssembly.config -t $OUTDIR/Pasa_K10L2/transcripts_K10L2.fasta --min_per_ID 95 --min_per_aligned 30
 
 #Load the braker genome annotations
-#$PASA_HOME/scripts/Load_Current_Gene_Annotations.dbi -c $OUTDIR/Pasa_K10L2/alignAssembly.config -g $REF -P $OUTDIR/K10L2_Braker/braker.gff3
+$PASA_HOME/scripts/Load_Current_Gene_Annotations.dbi -c $OUTDIR/Pasa_K10L2/alignAssembly.config -g $REF -P $OUTDIR/K10L2_Braker/braker.gff3
 
 #Validate the gff3 file 
-#$PASA_HOME/misc_utilities/pasa_gff3_validator.pl $OUTDIR/K10L2_Braker/braker.gff3
+$PASA_HOME/misc_utilities/pasa_gff3_validator.pl $OUTDIR/K10L2_Braker/braker.gff3
 
 #Update the annotations with the transcript data
-#Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_K10L2/annotationCompare.config -A -g $REF -t $OUTDIR/Pasa_K10L2/transcripts_K10L2.fasta --CPU 24
+Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_K10L2/annotationCompare.config -A -g $REF -t $OUTDIR/Pasa_K10L2/transcripts_K10L2.fasta --CPU 24
 
 #Load the updated genome anotation
 #$PASA_HOME/scripts/Load_Current_Gene_Annotations.dbi -c $OUTDIR/Pasa_K10L2/alignAssembly.config -g $REF -P $OUTDIR/Pasa_K10L2/pasa_db_K10L2.gene_structures_post_PASA_updates.3434867.gff3
