@@ -160,5 +160,11 @@ kpPlotLinks(kp, data=Inv2_start_range, data2=Inv2_end_range, r0=-.5, r1 = -.25, 
 kpPlotLinks(kp, data=Uninverted2_start_range, data2=Uninverted2_end_range, r0=-.5, r1 = -.25, y= 1.6, col = "aquamarine4", border = "aquamarine4" )
 dev.off()
 
+png(file="N10_Ab10_Orthologes_KaryoploteR_Legend.png", width = 480*4, height = 480*3, units = "px", pointsize = 24, bg = "white")
+kp <- plotKaryotype(genome = Ab10.genome, chromosomes = c("Ab10", "N10"), plot.type=1, plot.params=pp)
+kpAddBaseNumbers(kp)
+dev.off()
+
+
 
 

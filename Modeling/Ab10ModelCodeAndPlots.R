@@ -656,8 +656,10 @@ FigureB <- ggplot(subset(Data_1,
   geom_density_ridges(fill = "steelblue", alpha = 0.7) + 
   theme_bw() +
   xlim(0,1000) +
-  labs(x = "Time to loss of Ab10trkin+ (generations)", 
-       y = "Reduction in drive in Ab10trkin+ (0.1 ~ 5% drive)") 
+  labs(x = "Time to loss of Ab10 Trkin(+) [generations]", 
+       y = "Reduction in drive in Ab10 Trkin(+) [0.1 = 5% drive]") +
+  theme(axis.text = element_text(size = 15),
+        axis.title = element_text(size = 20))
 
 library(dplyr)
 
@@ -673,17 +675,22 @@ FigureA <- ggplot(Data_1_1,
              size=2) +
   geom_line(col="blue") +
   theme_bw() +
-  labs(y="Reduction in drive in Ab10trkin+ (0.1 ~ 5% drive)",
-       x="Proportion of realizations Ab10trkin- outcompetes Ab10trkin+")
+  labs(y="Reduction in drive in Ab10 Trkin(+) [0.1 = 5% drive]",
+       x="Proportion Ab10 trkin(-) outcompetes Ab10 Trkin(+)") +
+  theme(axis.text = element_text(size = 15),
+        axis.title = element_text(size = 20))
 
 
 Figure10 <- ggarrange(FigureA,
                      FigureB,
-                     nrow = 1, ncol = 2, labels = "AUTO")
+                     nrow = 1, ncol = 2, labels = "AUTO",
+                     font.label = list(size = 20, face="bold"))
 Figure10
 
 pdf("Figure10.pdf",
-    width = 10,
-    height = 5.15)
+    width = 14,
+    height = 7.5)
 print(Figure10)
 dev.off()
+
+

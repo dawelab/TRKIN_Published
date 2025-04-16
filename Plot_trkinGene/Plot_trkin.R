@@ -2,6 +2,7 @@ library(ggplot2)
 library(ggpubr)
 library(readxl)
 library(stringr)
+library(tidyverse)
 
 setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Plot_trkinGene")
 
@@ -82,10 +83,10 @@ ggplot() +
   theme_classic() +
   geom_segment(data=trkin_all_TE, size = 10,  aes(x = start, y = y, xend = end, yend = y, colour = Superfamily)) +
   scale_colour_brewer(palette = "Set2") +
-  geom_segment(data=trkin_all_EX, size = 20, aes(x = start, y = y, xend = end, yend = y), color = "black") +
-  geom_segment(aes(x = 0, y = 0, xend = 111420, yend = 0), arrow = arrow(length = unit(0.5, "cm"))) +
-  geom_segment(aes(x = 99521, y = 1, xend = 0, yend = 1), arrow = arrow(length = unit(0.5, "cm"))) +
-  geom_segment(aes(x = 76901, y = 2, xend = 0, yend = 2), arrow = arrow(length = unit(0.5, "cm"))) +
+  geom_segment(data=trkin_all_EX, size = 7, aes(x = start, y = y+.2, xend = end, yend = y+.2), color = "black") +
+  geom_segment(aes(x = 0, y = 0.2, xend = 111420, yend = 0.2), arrow = arrow(length = unit(0.5, "cm"))) +
+  geom_segment(aes(x = 99521, y = 1.2, xend = 0, yend = 1.2), arrow = arrow(length = unit(0.5, "cm"))) +
+  geom_segment(aes(x = 76901, y = 2.2, xend = 0, yend = 2.2), arrow = arrow(length = unit(0.5, "cm"))) +
   geom_segment(data=SPEC_TE, aes(x=x, y=y-0.01, xend=xend, yend=yend-0.01), size = 4, color = "navy") +
   geom_text(data=trkin_all_EX, aes(x=start, y= y2+0.5, label=Exon)) +
   ylab("") +
