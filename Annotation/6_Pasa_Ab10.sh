@@ -1,18 +1,20 @@
 #!/bin/bash
 #SBATCH --job-name=Pasa_Ab10
-#SBATCH --output=Pasa_Ab10_try4.out
-#SBATCH --partition=highmem_30d_p
+#SBATCH --output=Pasa_Ab10.out
+#SBATCH --partition=batch_30d
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=mjb51923@uga.edu
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=24
-#SBATCH --mem=400gb
+#SBATCH --mem=300gb
 #SBATCH --time=288:00:00
 
 #Load the modules 
 module load PASA/2.5.3-foss-2022a
 module load AGAT/1.1.0
 module load Perl/5.34.1-GCCcore-11.3.0
+#This is needed for Pasa
+export DBI_DRIVER=SQLite
 
 #Define the variables
 OUTDIR=/scratch/mjb51923/TRKIN_CRISPR/out_paper
@@ -44,9 +46,9 @@ PASA_HOME=/apps/eb/PASA/2.5.3-foss-2022a
 #agat_convert_sp_gxf2gxf.pl -g $OUTDIR/Braker/braker.gtf -o $OUTDIR/Braker/braker.gff3
 
 #This loads the module again, I think there are conflicting dependencies so these need to be run immidiatly before the command 
-module load PASA/2.5.3-foss-2022a
-module load Perl/5.34.1-GCCcore-11.3.0
+#module load PASA/2.5.3-foss-2022a
 #Run the initial pasa step which aligns the transcripts to the reference., -C creates the db, -R runs the pipeline, -t is the transcript file, --TDN is the full length transcripts from the denovo assembly, --aligners is the aligners to use, --CPU is the threads this cannot be changed or it throws errors. 
+cd /scratch/mjb51923/TRKIN_CRISPR/out_paper/Pasa_Ab10
 #Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_Ab10/alignAssembly.config -C -R -g $REF -t $OUTDIR/Pasa_Ab10/transcripts_B73Ab10.fasta --TDN $OUTDIR/Pasa_Ab10/tdn.accs --ALIGNERS minimap2 --CPU 2
 
 #Generate the comprehensive transcriptome database
@@ -62,15 +64,15 @@ module load Perl/5.34.1-GCCcore-11.3.0
 #Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_Ab10/annotationCompare.config -A -g $REF -t $OUTDIR/Pasa_Ab10/transcripts_B73Ab10.fasta --CPU 24
 
 #Load the updated genome anotation
-#$PASA_HOME/scripts/Load_Current_Gene_Annotations.dbi -c $OUTDIR/Pasa_Ab10/alignAssembly.config -g $REF -P $OUTDIR/Pasa_Ab10/pasa_db_Ab10.gene_structures_post_PASA_updates.2685167.gff3
-
-#Update the annotations with the transcript data again
-#Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_Ab10/annotationCompare.config -A -g $REF -t $OUTDIR/Pasa_Ab10/transcripts_B73Ab10.fasta --CPU 24
-
-#Load the updated genome anotation
-$PASA_HOME/scripts/Load_Current_Gene_Annotations.dbi -c $OUTDIR/Pasa_Ab10/alignAssembly.config -g $REF -P $OUTDIR/Pasa_Ab10/HiFiAb10.genes.gff3
+$PASA_HOME/scripts/Load_Current_Gene_Annotations.dbi -c $OUTDIR/Pasa_Ab10/alignAssembly.config -g $REF -P $OUTDIR/Pasa_Ab10/SQLite_db.gene_structures_post_PASA_updates.2091228.gff3
 
 #Update the annotations with the transcript data again
 Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_Ab10/annotationCompare.config -A -g $REF -t $OUTDIR/Pasa_Ab10/transcripts_B73Ab10.fasta --CPU 24
+
+#Load the updated genome anotation
+#$PASA_HOME/scripts/Load_Current_Gene_Annotations.dbi -c $OUTDIR/Pasa_Ab10/alignAssembly.config -g $REF -P $OUTDIR/Pasa_Ab10/HiFiAb10.genes.gff3
+
+#Update the annotations with the transcript data again
+#Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_Ab10/annotationCompare.config -A -g $REF -t $OUTDIR/Pasa_Ab10/transcripts_B73Ab10.fasta --CPU 24
 
 
