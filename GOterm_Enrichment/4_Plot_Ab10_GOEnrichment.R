@@ -103,7 +103,7 @@ MERGE_GO_ALL <- MERGE_GO_ALL[order(MERGE_GO_ALL$enrich, decreasing = TRUE),]
 #This defines it as a factor to maintain the ordering
 MERGE_GO_ALL$term <- factor(MERGE_GO_ALL$term, levels=rev(unique(MERGE_GO_ALL$term)))
 
-pdf("Ab10_GOterm_Enrichment.pdf", height=10, width=7)
+pdf("Ab10_GOterm_Enrichment.pdf", height=10.5, width=7)
 p <- ggplot() +
   geom_point(data=MERGE_GO_ALL, aes(x=term, y=start, color=as.numeric(enrich), size=logp), shape=4) +
   scale_colour_viridis_c(option = "turbo" , direction=1, begin = 0, end=0.9) +

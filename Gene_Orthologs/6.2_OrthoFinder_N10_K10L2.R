@@ -7,11 +7,11 @@ library(ggplot2)
 library(pafr)
 library(Rsamtools)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper")
+setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Gene_Orthologs")
 
 ORTHO <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.Protein.LongestIsoform__v__CI66_K10L2.K10L2hapProtein.LongestIsoform.tsv")
 
-B73_GFF <- read.delim("/Volumes/Transcend/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.noheader.gff3", header = FALSE)
+B73_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.nohead.gff3", header = FALSE)
 colnames(B73_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
 K10L2_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/CI66_K10L2_v1.gene.v2.gff3", header = FALSE)
@@ -121,16 +121,16 @@ pp$data2height <- 100
 pp$bottommargin <- 200
 
 #This does the plotting
-png(file="N10_K10L2_Orthologes_KaryoploteR.png", width = 480*4, height = 480*3, units = "px", pointsize = 24, bg = "white")
+pdf(file="N10_K10L2_Orthologes_KaryoploteR.pdf",  width = 6, height = 4, bg = "white")
 kp <- plotKaryotype(genome = K10L2.genome, chromosomes = c("N10", "K10L2"), plot.type=1, plot.params=pp)
-kpRect(kp, chr="N10", x0=141187279, x1=152435371, y0=0.01, y1=0.1, col = "darkgoldenrod1")
-kpRect(kp, chr="K10L2", x0=7429619, x1=13957822, y0=-0.25, y1=-0.35, col = "deepskyblue")
-kpRect(kp, chr="K10L2", x0=15726572, x1=15898240, y0=-0.25, y1=-0.35, col = "deepskyblue")
-kpRect(kp, chr="K10L2", x0=16787371, x1=25024178, y0=-0.25, y1=-0.35, col = "deepskyblue")
-kpRect(kp, chr="K10L2", x0=25498094, x1=25502283, y0=-0.25, y1=-0.35, col = "deepskyblue")
-kpRect(kp, chr="K10L2", x0=16328801, x1=16357145, y0=-0.25, y1=-0.35, col = "blue")
-kpRect(kp, chr="K10L2", x0=2729416, x1=7429619, y0=-0.25, y1=-0.35, col = "darkgoldenrod1")
-kpRect(kp, chr="K10L2", x0=25502283, x1=31891546, y0=-0.25, y1=-0.35, col = "darkgoldenrod1")
+kpRect(kp, chr="N10", x0=141187279, x1=152435371, y0=0.01, y1=0.1, col = "darkgoldenrod1", border= "darkgoldenrod1")
+kpRect(kp, chr="K10L2", x0=7429619, x1=13957822, y0=-0.25, y1=-0.35, col = "deepskyblue", border= "deepskyblue")
+kpRect(kp, chr="K10L2", x0=15726572, x1=15898240, y0=-0.25, y1=-0.35, col = "deepskyblue", border= "deepskyblue")
+kpRect(kp, chr="K10L2", x0=16787371, x1=25024178, y0=-0.25, y1=-0.35, col = "deepskyblue", border= "deepskyblue")
+kpRect(kp, chr="K10L2", x0=25498094, x1=25502283, y0=-0.25, y1=-0.35, col = "deepskyblue", border= "deepskyblue")
+kpRect(kp, chr="K10L2", x0=16328801, x1=16357145, y0=-0.25, y1=-0.35, col = "blue", border= "blue")
+kpRect(kp, chr="K10L2", x0=2729416, x1=7429619, y0=-0.25, y1=-0.35, col = "darkgoldenrod1", border= "darkgoldenrod1")
+kpRect(kp, chr="K10L2", x0=25502283, x1=31891546, y0=-0.25, y1=-0.35, col = "darkgoldenrod1", border= "darkgoldenrod1")
 kpPlotLinks(kp, data=Uninverted_start_range, data2=Uninverted_end_range, r0=-.5, r1 = -.25, y= 1.6, col = "palegreen", border = "palegreen" )
 kpPlotLinks(kp, data=Inv1_start_range, data2=Inv1_end_range, r0=-.5, r1 = -.25, y= 1.6, col = "seagreen1", border = "seagreen1")
 kpPlotLinks(kp, data=Inv2_start_range, data2=Inv2_end_range, r0=-.5, r1 = -.25, y= 1.6, col = "aquamarine", border = "aquamarine")
