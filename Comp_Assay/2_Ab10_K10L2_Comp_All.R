@@ -53,13 +53,46 @@ SIG <- data.frame(Genotype = c("True Positive", "Ab10-I trkin + K10L2 trkin +", 
 
 pdf("Effect_Of_trkin_on_Ab10K10L2_Seg_AllComp.pdf", height = 6, width=9.5)
 a <- ggplot() +
-  geom_jitter(data=DATA, aes(x =Genotype, y = Prop_Drive, color = Round, size= Total, shape = Cas9), alpha=0.7) +
+  geom_jitter(data=DATA, aes(x =Genotype, y = Prop_Drive, color = Round, size= Total), alpha=0.7) +
   geom_boxplot(data=DATA, aes(x =Genotype, y = Prop_Drive), alpha = 0.5, outlier.shape = NA) +
   labs(x="trkin Genotype", y="Proportion Ab10", size = "Kernel\nNumber", color = "Season") +
   scale_x_discrete(labels = x.labels) +
   scale_y_continuous(breaks = c(0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)) +
   scale_colour_viridis_d(option = "plasma", end = 0.7) +
   geom_text(data=SIG, aes(x=Genotype, y=y, label=Label), size = 7) +
+  theme(axis.title = element_text(size = 20), axis.text.y = element_text(size = 18), axis.text.x = element_text(size = 18), legend.title = element_text(size = 20), legend.text = element_text(size = 18), legend.position = "right")
+a
+dev.off()
+
+
+
+pdf("Effect_Of_trkin_on_Ab10K10L2_Seg_AllComp_Bars.pdf", height = 6, width=9.5)
+a <- ggplot(DATA, aes(x =Genotype, y = Prop_Drive)) +
+  geom_jitter(aes(x =Genotype, y = Prop_Drive, color = Round, size= Total, shape = Cas9), alpha=0.7) +
+  geom_boxplot(aes(x =Genotype, y = Prop_Drive), alpha = 0.5, outlier.shape = NA) +
+  labs(x="trkin Genotype", y="Proportion Ab10", size = "Kernel\nNumber", color = "Season") +
+  scale_x_discrete(labels = x.labels) +
+  scale_y_continuous(breaks = c(0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)) +
+  scale_colour_viridis_d(option = "plasma", end = 0.7) +
+  geom_signif(comparisons = list(c("Ab10-I trkin + K10L2 trkin +", "True Positive")), annotation = c("**"), tip_length = 0.03, y_position = c(.90, .91)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin + K10L2 trkin +", "Ab10-I trkin - K10L2 trkin -")), annotation = c("***"), tip_length = 0.03, y_position = c(.90, .91)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin - K10L2 trkin -", "Ab10-I trkin - K10L2 trkin +")), annotation = c("***"), tip_length = 0.03, y_position = c(.90, .91)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin - K10L2 trkin +", "Ab10-I trkin + K10L2 trkin -")), annotation = c("***"), tip_length = 0.03, y_position = c(.90, .91)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin + K10L2 trkin -", "Ab10-I trkin - N10")), annotation = c("***"), tip_length = 0.01, y_position = c(.90, .91)) +
+  #geom_signif(comparisons = list(c("Ab10-I trkin + N10", "Ab10-I trkin - N10")), annotation = c("NS"), tip_length = 0.03, y_position = c(.90, .91)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin - K10L2 trkin -", "True Positive")), annotation = c("***"), tip_length = 0.03, y_position = c(.97, .98)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin - K10L2 trkin -", "Ab10-I trkin + K10L2 trkin -")), annotation = c("***"), tip_length = 0.03, y_position = c(.97, .98)) +
+  #geom_signif(comparisons = list(c("Ab10-I trkin + K10L2 trkin -", "Ab10-I trkin + N10")), annotation = c("NS"), tip_length = 0.03, y_position = c(.95, .96)) +
+  #geom_signif(comparisons = list(c("Ab10-I trkin + K10L2 trkin +", "Ab10-I trkin - K10L2 trkin +")), annotation = c("NS"), tip_length = 0.03, y_position = c(1.00, 1.01)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin - K10L2 trkin +", "Ab10-I trkin - N10")), annotation = c("***"), tip_length = 0.03, y_position = c(1.05, 1.06)) +
+  #geom_signif(comparisons = list(c("Ab10-I trkin - K10L2 trkin +", "True Positive")), annotation = c("NS"), tip_length = 0.03, y_position = c(1.00, 1.01)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin - K10L2 trkin +", "Ab10-I trkin + N10")), annotation = c("**"), tip_length = 0.03, y_position = c(1.15, 1.16)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin + K10L2 trkin -", "Ab10-I trkin + K10L2 trkin +")), annotation = c("***"), tip_length = 0.03, y_position = c(1.2, 1.21)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin + K10L2 trkin +", "Ab10-I trkin - N10")), annotation = c("***"), tip_length = 0.03, y_position = c(1.3, 1.31)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin + K10L2 trkin -", "True Positive")), annotation = c("***"), tip_length = 0.03, y_position = c(1.4, 1.41)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin - N10", "True Positive")), annotation = c("***"), tip_length = 0.03, y_position = c(1.5, 1.51)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin + N10", "Ab10-I trkin + K10L2 trkin +")), annotation = c("**"), tip_length = 0.03, y_position = c(1.6, 1.61)) +
+  geom_signif(comparisons = list(c("Ab10-I trkin + N10", "True Positive")), annotation = c("***"), tip_length = 0.03, y_position = c(1.7, 1.71)) +
   theme(axis.title = element_text(size = 20), axis.text.y = element_text(size = 18), axis.text.x = element_text(size = 18), legend.title = element_text(size = 20), legend.text = element_text(size = 18), legend.position = "right")
 a
 dev.off()
