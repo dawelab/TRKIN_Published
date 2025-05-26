@@ -1,0 +1,26 @@
+{
+    "id": "A51EDA3D",
+    "path": "~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Differential_Expression/TPM_v1.R",
+    "project_path": null,
+    "type": "r_source",
+    "hash": "2149273599",
+    "contents": "",
+    "dirty": false,
+    "created": 1737752643149.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "50,61",
+        "scrollLine": "40"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1737755086,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1737755086189,
+    "read_only": false,
+    "read_only_alternatives": []
+}

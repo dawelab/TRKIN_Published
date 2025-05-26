@@ -1,0 +1,31 @@
+GO.ID,Term,Annotated,Significant,Expected,classicFisher,Type
+GO:0030422,siRNA processing,39,10,0.14,8.2e-17,Biological Process
+GO:0043331,response to dsRNA,45,10,0.16,4.1e-16,Biological Process
+GO:0070918,regulatory ncRNA processing,45,10,0.16,4.1e-16,Biological Process
+GO:0071359,cellular response to dsRNA,45,10,0.16,4.1e-16,Biological Process
+GO:0050776,regulation of immune response,86,11,0.31,8.1e-15,Biological Process
+GO:0035194,regulatory ncRNA-mediated post-transcriptional gene silencing,73,10,0.26,7.4e-14,Biological Process
+GO:0002682,regulation of immune system process,105,11,0.38,7.8e-14,Biological Process
+GO:0016441,post-transcriptional gene silencing,77,10,0.28,1.3e-13,Biological Process
+GO:1901699,cellular response to nitrogen compound,93,10,0.34,9.1e-13,Biological Process
+GO:0031047,RNA-mediated gene silencing,99,10,0.36,1.7e-12,Biological Process
+GO:0034062,5'-3' RNA polymerase activity,86,10,0.33,7.9e-13,Molecular Function
+GO:0097747,RNA polymerase activity,86,10,0.33,7.9e-13,Molecular Function
+GO:0003899,DNA-directed 5'-3' RNA polymerase activity,80,9,0.31,1.7e-11,Molecular Function
+GO:0016779,nucleotidyltransferase activity,405,15,1.56,1.7e-11,Molecular Function
+GO:0003777,microtubule motor activity,77,8,0.3,4.7e-10,Molecular Function
+GO:0140098,catalytic activity  acting on RNA,353,13,1.36,5.1e-10,Molecular Function
+GO:0003774,cytoskeletal motor activity,110,8,0.42,8.2e-09,Molecular Function
+GO:0008569,minus-end-directed microtubule motor activity,11,4,0.04,6.3e-08,Molecular Function
+GO:0140640,"catalytic activity, acting on a nucleic acid",822,15,3.17,2.6e-07,Molecular Function
+GO:0008092,cytoskeletal protein binding,88,6,0.34,1e-06,Molecular Function
+GO:0000419,RNA polymerase V complex,18,9,0.07,2.8e-18,Cellular Component
+GO:0000418,RNA polymerase IV complex,22,9,0.08,2.9e-17,Cellular Component
+GO:0000792,heterochromatin,23,9,0.09,4.7e-17,Cellular Component
+GO:0000785,chromatin,161,14,0.6,3.6e-16,Cellular Component
+GO:0000228,nuclear chromosome,96,11,0.36,3.6e-14,Cellular Component
+GO:0005694,chromosome,313,15,1.17,1.9e-13,Cellular Component
+GO:0000428,DNA-directed RNA polymerase complex,57,9,0.21,4.7e-13,Cellular Component
+GO:0055029,nuclear DNA-directed RNA polymerase complex,57,9,0.21,4.7e-13,Cellular Component
+GO:0030880,RNA polymerase complex,58,9,0.22,5.6e-13,Cellular Component
+GO:0032991,protein-containing complex,2275,30,8.53,1.7e-12,Cellular Component
