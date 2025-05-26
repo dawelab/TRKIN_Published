@@ -1,4 +1,4 @@
-###This section is from online and parses the .delta file
+###This sectionparses the .delta file
 library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -63,7 +63,7 @@ K180groby <- text_grob("Knob\n180", face = "bold", color = "darkorange3", size =
 
 
 #These are descriptions of relevant regions
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper/OGAb10_HiFiAb10_DotPlot.pdf", height = 10, width = 10)
+pdf("OGAb10_HiFiAb10_DotPlot.pdf", height = 10, width = 10)
 dotplot <- ggplot() +
   geom_point(data=coords_filt, alpha = 0.3, aes(x=s1_MB, y=s2_MB, color=`%IDY` )) +
   scale_colour_viridis_c(direction=-1, breaks = c(89, 99), labels = c("85","100")) +
@@ -98,10 +98,6 @@ dotplot <- ggplot() +
   geom_rect(mapping=aes(xmin=189.437000-140.935118, xmax=190.268773-140.935118, ymin=-2.000000, ymax=-0.050000), alpha=0.5, fill="hotpink", color = NA ) +
   annotation_custom(Kindrgrob, xmin=189.437000-140.935118+1.8, xmax=190.268773-140.935118+1.8, ymin=-5, ymax=-5) +
   
-  
-  
-  
-  
   #####################HiFi Ab10 Annotations
 
   ####TR1 Knob1
@@ -135,7 +131,7 @@ dev.off()
 
 Kindrgrob <- text_grob("kindr", face = "bold", color = "red", size = 25)
 
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper/OGAb10_HiFiAb10_DotPlot_DistalTip.pdf", height=10, width=10)
+pdf("OGAb10_HiFiAb10_DotPlot_DistalTip.pdf", height=10, width=10)
 Distal <- dotplot +
   scale_x_continuous(breaks=c(42:54), limits=c(42,54.5)) +
   scale_y_continuous(breaks=c(42:54), limits=c(42, 54)) +
