@@ -1,4 +1,4 @@
-setwd("/scratch/mjb51923/Ab10_FT_Mapping/out/Df_Seq/Repeat_Abundance")
+setwd("")
 
 AB10 <- read.delim("BLAST_CentC_W23-Ab10_ALL.merge.bed")
 
@@ -17,6 +17,8 @@ L$length <- abs(L$qend-L$qstart)
 K$length <- abs(K$qend-K$qstart)
 
 AB10_filt <- subset(AB10, length >=30)
+
+#y values are the average coverage across the genome determined by samtools
 
 #Ab10 
 x=sum(AB10_filt$length)
