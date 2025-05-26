@@ -1,4 +1,3 @@
-###This section is from online and parses the .delta file
 library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -11,7 +10,7 @@ library(RColorBrewer)
 options(ucscChromosomeNames=FALSE)
 
 #This loads the coords
-coords <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/K10L2_DotPlot/N10_v_K10L2_nucmer.coords", header=FALSE)
+coords <- read.delim("N10_v_K10L2_nucmer.coords", header=FALSE)
 #Drop the first two lines of header
 coords <- coords[-c(1,2,3),]
 #Define the column names
@@ -47,7 +46,7 @@ Trkingrob <- text_grob("trkin", face = "bold", color = "blue", rot = 90, size=25
 
 
 #These are descriptions of relevant regions
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper/N10_K10L2_DotPlot.pdf", height=8, width=8)
+pdf("N10_K10L2_DotPlot.pdf", height=8, width=8)
 dotplot <- ggplot() +
   geom_point(data=coords_filt, alpha = 0.2, aes(x=s1_MB, y=s2_MB, color=`%IDY` )) +
   scale_colour_viridis_c(direction=-1, breaks = c(91, 99.90), labels = c("85","100")) +
@@ -83,16 +82,5 @@ dotplot <- ggplot() +
   annotation_custom(Sharedgrob, ymin=25.502283-2.730186, ymax=31.891546-2.730186, xmin=-1.1, xmax=-1.1) +
   coord_cartesian(clip="off")
 dotplot
-dev.off()
-
-jmjcgrob <- text_grob("3 Copies\nJmjC Containing\n Protein", face = "bold", color = "red", size = 20)
-
-
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper/N10_K10L2_DotPlot_SharedDup.pdf", height=8, width=8)
-Share <- dotplot +
-  scale_x_continuous(breaks=c(7.75, 7.85, 7.95, 8), limits=c(7.75, 8)) +
-  scale_y_continuous(breaks=c(24.5, 25, 25.5, 26), limits=c(24.5, 26)) +
-  annotation_custom(jmjcgrob, xmin=7.85, xmax=7.85, ymin=24.5, ymax=25)
-Share
 dev.off()
 
