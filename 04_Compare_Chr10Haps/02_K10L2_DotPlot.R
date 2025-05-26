@@ -10,7 +10,7 @@ library(RColorBrewer)
 options(ucscChromosomeNames=FALSE)
 
 #This loads the coords
-coords <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/K10L2_DotPlot/K10L2_v_K10L2_nucmer.coords", header=FALSE)
+coords <- read.delim("K10L2_v_K10L2_nucmer.coords", header=FALSE)
 #Drop the first two lines of header
 coords <- coords[-c(1,2,3),]
 #This drops the first row
@@ -43,7 +43,7 @@ Trkingrob <- text_grob("trkin", face = "bold", color = "blue", size=25)
 
 
 #These are descriptions of relevant regions
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper/K10L2_K10L2_DotPlot.pdf", height = 8, width = 8)
+pdf("K10L2_K10L2_DotPlot.pdf", height = 8, width = 8)
 dotplot <- ggplot() +
   geom_point(data=coords_filt, alpha = 0.1, aes(x=s1_MB, y=s2_MB, color=`%IDY` )) +
   scale_colour_viridis_c(direction=-1, breaks = c(91, 100), labels = c("85","100")) +
@@ -78,7 +78,7 @@ dev.off()
 Trkingrob <- text_grob("trkin", face = "bold", color = "red", size = 20)
 
 
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper/K10L2_K10L2_DotPlot_InterKnob.pdf", height=8, width=8)
+pdf("K10L2_K10L2_DotPlot_InterKnob.pdf", height=8, width=8)
 Interknob <- dotplot +
   scale_x_continuous(breaks=c(10,11,12,13,14,15), limits=c(10, 15)) +
   scale_y_continuous(breaks=c(10,11,12,13,14,15), limits=c(10, 15)) +
@@ -88,15 +88,3 @@ Interknob <- dotplot +
   theme(axis.text = element_text(size = 20), axis.title = element_text(size = 24, face = "bold"), axis.text.x = element_text(angle=90, hjust=0.5, vjust=0.5), legend.text = element_text(size = 20), legend.position = "bottom", legend.title = element_text(size = 24, face = "bold"))
 Interknob
 dev.off()
-
-jmjcgrob <- text_grob("3 Copies\nJmjC Containing\n Protein", face = "bold", color = "red", size = 20)
-
-
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper/K10L2_K10L2_DotPlot_SharedDup.pdf", height=8, width=8)
-Share <- dotplot +
-  scale_x_continuous(breaks=c(24,25,26), limits=c(24, 26)) +
-  scale_y_continuous(breaks=c(24,25,26), limits=c(24, 26)) +
-  annotation_custom(jmjcgrob, xmin=25, xmax=25.7, ymin=24.5, ymax=25)
-Share
-dev.off()
-
