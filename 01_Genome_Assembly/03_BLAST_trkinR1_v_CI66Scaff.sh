@@ -1,20 +1,9 @@
-#!/bin/bash
-#SBATCH --partition=batch 
-#SBATCH -J BLAST_trkin_v_CI66Scaffolds
-#SBATCH --output BLAST_trkin_v_CI66Scaffolds.out
-#SBATCH --mem=5GB
-#SBATCH --time=2:00:00
-#SBATCH	--nodes=1
-#SBATCH	--ntasks=30
-#SBATCH --mail-user=meghan.brady@uga.edu
-#SBATCH --mail-type=END
-
 #load the modules necessary from the cluster
 module load BLAST+/2.13.0-gompi-2022a
 
 
 #Define Variables, variables in all caps 
-DIR="/scratch/mjb51923/CI66_Assembly/out"
+DIR=""
 NAME="CI66_rq99.asm"
 
 #make blast database for the B73Ab10 reference genome
