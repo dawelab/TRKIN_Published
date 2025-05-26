@@ -18,7 +18,7 @@ K$length <- abs(K$qend-K$qstart)
 
 AB10_filt <- subset(AB10, length >=30)
 
-#y values are average coverage of genome determined using samtools
+#y/b/d values are average coverage of genome determined using samtools
 
 #Ab10 
 x=sum(AB10_filt$length)
