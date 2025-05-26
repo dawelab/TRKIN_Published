@@ -1,28 +1,18 @@
-#!/bin/bash
-#SBATCH --job-name=Hisat2_HifiAb10
-#SBATCH --output=Hisat2_HifiAb10.%A-%a.out
-#SBATCH --partition=batch
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=mjb51923@uga.edu
-#SBATCH --ntasks=24
-#SBATCH --mem=100gb
-#SBATCH --time=24:00:00
-#SBATCH --array=1-20
-
 #Load Modules needed 
 module load HISAT2/3n-20201216-gompi-2022a
 module load SAMtools/1.17-GCC-12.2.0
 
 #Set the file name 
 THREADS=24
-READDIR=/scratch/mjb51923/TRKIN_CRISPR/out_paper/Trimmed_RNAseq_Ab10
-OUT=/scratch/mjb51923/TRKIN_CRISPR/out_paper
+#Ab10 RNA seq reads come from https://doi.org/10.1186/s13059-020-02029-9
+READDIR=path/to/RNAseq_Ab10
+OUT=""
 
 #Make the output directory and enter it
 #mkdir $OUT/Hisat2
 cd $OUT/Hisat2
 
-#List of all RNA seq identifiers (one per pair) from EBI E-MTAB-8641 made in List.txt
+#Manuallt list of all RNA seq identifiers (one per pair) from EBI E-MTAB-8641 made in List.txt
 
 #This pulls info from the array job
 IT=$SLURM_ARRAY_TASK_ID
