@@ -4,7 +4,7 @@
 
 #cat BLAST_knob180_W23-Ab10.out BLAST_knob180_W23-Ab10_R2.out >> BLAST_knob180_W23-Ab10_ALL.out
 
-setwd("/scratch/mjb51923/Ab10_FT_Mapping/out/Df_Seq/Repeat_Abundance")
+setwd("")
 
 AB10 <- read.delim("BLAST_knob180_W23-Ab10_ALL.merge.bed")
 
@@ -23,6 +23,8 @@ L$length <- abs(L$qend-L$qstart)
 K$length <- abs(K$qend-K$qstart)
 
 AB10_filt <- subset(AB10, length >=30)
+
+#y values are average coverage of the genome determined by samtools
 
 #Ab10 
 x=sum(AB10_filt$length)
