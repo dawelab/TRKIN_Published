@@ -2,7 +2,7 @@
 module load hifiasm/0.19.6-GCCcore-11.3.0
 
 OUTDIR=""
-READS="/path/to/rawreads/CI66.HiFi.rq99.fastq"
+READS="/path/to/CI66_HiFi_Reads/CI66.HiFi.rq99.fastq"
 
 #Enter output directory
 cd $OUT_DIR
