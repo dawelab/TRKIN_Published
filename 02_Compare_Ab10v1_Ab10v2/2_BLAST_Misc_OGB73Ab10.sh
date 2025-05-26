@@ -1,11 +1,10 @@
-###All of this was run on the command line 
-
 #load the modules necessary from the cluster
 module load BLAST+/2.13.0-gompi-2022a
 
 #Define Variables, variables in all caps 
-DIR="/scratch/mjb51923/TRKIN_CRISPR/out_paper/K10L2_Mummer/"
+DIR=""
 NAME="Zm-B73_AB10_v1"
+#This reference comes from https://doi.org/10.1186/s13059-020-02029-9
 REF="/scratch/mjb51923/ref_genomes/Zm-B73_AB10-REFERENCE-NAM-1.0.fa"
 
 #make blast database for the B73Ab10 reference genome
