@@ -12,5 +12,6 @@
 10. These scripts use AGAT to extract CDS and cDNA sequence from the final annotation.
 11. These files contain the final annotations.
 12. These scripts use EnTAP to produce functional annotations for all annotated genes.
-13. These files contain the Ab10 and K10L2 specific annotation files.
+13. These scripts select only genes and their functional annotation that are in Ab10 or K10L2 specific regions
+14. These files contain the Ab10 and K10L2 specific annotation files with their functional annotations.
    
