@@ -2,7 +2,7 @@
 module load RepeatMasker/4.1.5-foss-2022a
 
 #Set the file name 
-REF=""
+REF="B73_Ab10_HiFi_v2.fa"
 OUT=""
 
 #Make the output folder
