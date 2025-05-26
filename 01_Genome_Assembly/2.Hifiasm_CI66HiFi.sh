@@ -1,4 +1,4 @@
-t#Load the modile
+#Load the modile
 module load hifiasm/0.19.6-GCCcore-11.3.0
 
 OUTDIR=""
