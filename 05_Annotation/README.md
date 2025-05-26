@@ -9,7 +9,8 @@
 7. These sciripts use Pasa to generate a comprehensize transcriptome from the StringTie and Trinity transcriptome assemblies and then polish the Braker annotation 4 times.
 8. These scripts use liftoff on the K10L2 haplotype and trkin bearing interknob region on Ab10 to update the annotations in each region.
 9. This script selects only the region in the trkin bearing region and transfers annotations between Ab10 and K10L2.
-10. These files contain the final annotation files.
-11. These scripts use AGAT to extract CDS and cDNA sequence from the final annotation.
+10. These scripts use AGAT to extract CDS and cDNA sequence from the final annotation.
+11. These files contain the final annotations.
 12. These scripts use EnTAP to produce functional annotations for all annotated genes.
+13. These files contain the Ab10 and K10L2 specific annotation files.
    
