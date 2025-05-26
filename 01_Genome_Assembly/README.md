@@ -4,4 +4,7 @@
 3. Identify contigs with homology to the colored1 (R1) and trkin genes.
 4. I manually generated this agp file to assemble the colored1 (R1) bearing contig and the trkin bearing contig into a larger contig with an N gap between them.
 5. Assemble the K10L2 contig accoring to the agp described in 4.
-6. Identify relavant features of the K10L2 haplotype using BLAST. 
+6. Identify relavant features of the K10L2 haplotype using BLAST.
+
+# Code used to generate the B73_Ab10_v2 genome can be found at https://github.com/dawelab/Ab10-Assembly/tree/master
+This pipeline was used with new PacBio HIFI data available under NCBI SRA bioproject PRJNA1254310
