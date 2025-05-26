@@ -5,7 +5,7 @@ OUTDIR=""
 READS="/path/to/CI66_HiFi_Reads/CI66.HiFi.rq99.fastq"
 
 #Enter output directory
-cd $OUT_DIR
+cd $OUTDIR
 
 #Perform assemble
 #write commands just write more files for checks if you need them later. -t is threads, -u disables post-joining, which can lead to misassemblies. -l0 indicates that this is a homozygote
