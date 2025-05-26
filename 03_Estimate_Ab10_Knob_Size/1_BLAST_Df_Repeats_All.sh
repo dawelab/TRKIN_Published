@@ -1,23 +1,13 @@
-#!/bin/bash
-#SBATCH --partition=batch
-#SBATCH -J BLAST_Df_Repeats_All
-#SBATCH --output /scratch/mjb51923/Ab10_FT_Mapping/scripts/BLAST_Df_Repeats_All.out
-#SBATCH --mem=100000
-#SBATCH --time=100:00:00
-#SBATCH	--nodes=1
-#SBATCH	--ntasks-per-node=30
-#SBATCH --mail-user=meghan.brady@uga.edu
-#SBATCH --mail-type=END
-
 #load the modules necessary from the cluster
 module load BLAST/2.2.26-Linux_x86_64
 module load seqtk/1.2-foss-2019b
 module load BEDTools/2.30.0-GCC-8.3.0
 
 #Define the variables
-DIR="/scratch/mjb51923/Ab10_FT_Mapping/out/Df_Seq/Repeat_Abundance"
-REF_DIR="/scratch/mjb51923/annotations"
-READ_DIR="/scratch/mjb51923/raw_reads/Ab10"
+DIR=""
+REF_DIR="/path/to/annotations"
+#Reads derived from  https://doi.org/10.1002/pld3.567
+READ_DIR="/path/to/reads"
 
 #Index the references
 #formatdb -p F -o T -i $REF_DIR/knob180.fasta
@@ -43,7 +33,7 @@ READ_DIR="/scratch/mjb51923/raw_reads/Ab10"
 # 	seqtk seq -a $READ_DIR/$x > $DIR/${SAMP}_R2.fasta
 # done
 
-#BLAST all the reads for all of my W23 lines to each repeat. These are nested for loops, but bash will not accept them with it indented to show this
+#BLAST all the reads for all of my W23 lines to each repeat.
 for i in "knob180.fasta" \
 "TR1.fasta" \
 "CentC.fasta"
@@ -59,7 +49,7 @@ do
 done
 done
 
-#BLAST all the reads for all of my W23 lines to each repeat. These are nested for loops, but bash will not accept them with it indented to show this
+#BLAST all the reads for all of my W23 lines to each repeat.
 for i in "knob180.fasta" \
 "TR1.fasta" \
 "CentC.fasta"
