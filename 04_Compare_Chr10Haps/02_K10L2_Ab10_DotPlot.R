@@ -1,4 +1,3 @@
-###This section is from online and parses the .delta file
 library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -11,7 +10,7 @@ library(RColorBrewer)
 options(ucscChromosomeNames=FALSE)
 
 #This loads the coords
-coords <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/K10L2_DotPlot/K10L2_v_Ab10_nucmer.coords", header=FALSE)
+coords <- read.delim("K10L2_v_Ab10_nucmer.coords", header=FALSE)
 #This drops the first row
 coords <- coords[-c(1),]
 names(coords) <- c("s1", "e1","s2","e2", "LEN1","LEN2", "%IDY","LENR", "LENQ", "COVR", "COVQ", "TAGS", "TAGS2")
@@ -60,7 +59,7 @@ coords_filt$s1_MB <- coords_filt$s1/1000000
 coords_filt$s2_MB <- coords_filt$s2/1000000
 
 #These are descriptions of relevant regions
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Compare_Chr10Haps/K10L2_Ab10_DotPlot.pdf", height = 12, width = 14)
+pdf("K10L2_Ab10_DotPlot.pdf", height = 12, width = 14)
 dotplot <- ggplot() +
   geom_point(data=coords_filt, alpha = 0.3, aes(x=s1_MB, y=s2_MB, color=`%IDY` )) +
   scale_colour_viridis_c(direction=-1, breaks = c(87.67, 99), labels = c("85","100")) +
@@ -128,7 +127,7 @@ dev.off()
 Trkin1grob <- text_grob("Trkin1", face = "italic", color = "black", size = 8)
 Trkin2grob <- text_grob("Trkin2", face = "italic", color = "black", size = 8)
 
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Compare_Chr10Haps/K10L2_Ab10_DotPlot_InterKnob.pdf", height=3, width=3)
+pdf("K10L2_Ab10_DotPlot_InterKnob.pdf", height=3, width=3)
 Interknob <- dotplot +
   xlim(11, 14.5) +
   ylim(5, 10) +
