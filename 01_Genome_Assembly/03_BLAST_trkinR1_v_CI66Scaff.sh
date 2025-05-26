@@ -6,8 +6,10 @@ module load BLAST+/2.13.0-gompi-2022a
 DIR=""
 NAME="CI66_rq99.asm"
 
-#make blast database for the B73Ab10 reference genome
+#make blast database for the CI66 K10L2 scaffolds.
 makeblastdb -in $DIR/${NAME}.bp.p_ctg.gfa.fasta -parse_seqids -dbtype nucl
+
+#Identify scaffolds containing the K10L2 haplotype
 
 #blast trkin against the scaffolds 
 blastn -num_threads 30 -task "blastn" -outfmt 6 -db $DIR/${NAME}.bp.p_ctg.gfa.fasta -query /scratch/mjb51923/annotations/trkin_cds_1.fa -out $DIR/BLAST_trkin_v_CI66Scaff.out
