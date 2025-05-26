@@ -22,7 +22,7 @@ liftoff -a 0.4 -s 0.4 -copies -sc 0.7 -flank 0.1 -g $DIR/pasa_db_Ab10.gene_struc
 #Identify the liftedoff genes that didn't appear in the original annotations
 bedtools intersect -a $DIR/pasa_db_K10L2.gene_structures_post_PASA_updates.3815155.trkinreg.Ab10Liftoff.gff3 -b $DIR/pasa_db_K10L2.gene_structures_post_PASA_updates.3815155.trkinreg.gff3 -v > $DIR/CI66_K10L2_v1.trkinreg.Ab10liftoff.newonly.gff3
 
-#I downloaded this file in R and subset it to only the trkin specific regions
+#I downloaded this file in R and subset it to only the trkin specific regions. This script is under 08_FilterAndRename_Liftoff.R
 #This combines both gff3 files to create a new gff3 file with the new genes
 cat $DIR/CI66_K10L2_v1.trkinreg.Ab10liftoff.newonly.fix.gff3 /scratch/mjb51923/TRKIN_CRISPR/out_paper/Pasa_K10L2/pasa_db_K10L2.gene_structures_post_PASA_updates.3815155.gff3 > $DIR/CI66_K10L2_v1.gene.v2.gff3
 #This sorts the new gff3 file
