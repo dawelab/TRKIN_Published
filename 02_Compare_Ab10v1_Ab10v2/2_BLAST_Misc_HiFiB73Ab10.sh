@@ -4,8 +4,8 @@
 module load BLAST+/2.13.0-gompi-2022a
 
 #Define Variables, variables in all caps 
-DIR="/scratch/mjb51923/TRKIN_CRISPR/out_paper/K10L2_Mummer"
-REF="/scratch/mjb51923/ref_genomes/Ab10_HiFi_v2_corrected.fa"
+DIR=""
+REF="/path/to/B73_Ab10_HiFi_v2.fa"
 
 #make blast database for the B73Ab10 reference genome
 #This was run in a previous script 
