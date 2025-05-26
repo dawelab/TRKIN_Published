@@ -12,7 +12,7 @@ OUT=""
 #mkdir $OUT/Hisat2
 cd $OUT/Hisat2
 
-#Manuallt list of all RNA seq identifiers (one per pair) from EBI E-MTAB-8641 made in List.txt
+#Manuallt list of all RNA seq identifiers (one per pair) from Bioproject PRJEB35367 made in List.txt
 
 #This pulls info from the array job
 IT=$SLURM_ARRAY_TASK_ID
@@ -24,8 +24,11 @@ REF=$OUT/RepeatMasker/Ab10_HiFi_v2_corrected.fa.masked
 #Build a hisat2 reference
 #I ran this command separatly first to avoid having the reference re built every time
 #hisat2-build $REF Ab10_HiFi_v2_corrected.fa.masked
+#Align the RNAseq reads to the masked reference
 hisat2 -x $OUT/Hisat2/Ab10_HiFi_v2_corrected.fa.masked -p $THREADS -1 $READDIR/${NAME}_R1_paired.fq -2 $READDIR/${NAME}_R2_paired.fq -S $OUT/Hisat2/${NAME}.sam
+#Cenvert the sam file output by hisat2 to a bam file
 samtools view -bS $OUT/Hisat2/${NAME}.sam > $OUT/Hisat2/${NAME}.bam
+#Sorted the bam file
 samtools sort $OUT/Hisat2/${NAME}.bam -o $OUT/Hisat2/${NAME}.s.bam
 
 
