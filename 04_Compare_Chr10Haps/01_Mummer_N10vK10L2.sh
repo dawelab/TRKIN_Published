@@ -1,23 +1,12 @@
-#!/bin/bash
-#SBATCH --job-name=Mummer_N10vK10L2
-#SBATCH --output=Mummer_N10vK10L2.out
-#SBATCH --partition=batch
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=mjb51923@uga.edu
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=30
-#SBATCH --mem=100gb
-#SBATCH --time=72:00:00
-
 #Load Modules
 module load MUMmer/4.0.0rc1-GCCcore-11.3.0
 module load SAMtools/1.10-GCC-8.3.0
 
 #Define Variables
-K10L2="/scratch/mjb51923/TRKIN_CRISPR/out_paper/RepeatMasker/CI66_K10L2_v1.fasta"
-AB10='/scratch/mjb51923/ref_genomes/Ab10_HiFi_v2_corrected.fa'
-N10='/scratch/mjb51923/ref_genomes/B73.PLATINUM.pseudomolecules-v1.fasta'
-DIR="/scratch/mjb51923/TRKIN_CRISPR/out_paper/K10L2_Mummer"
+K10L2="CI66_K10L2_v1.fasta"
+AB10='B73_Ab10_HiFi_v2.fa'
+N10='B73.PLATINUM.pseudomolecules-v1.fasta'
+DIR=""
 
 #Make Region files 
 printf "K10L2:2730186-31891546" > $DIR/CI66_K10L2.bed
