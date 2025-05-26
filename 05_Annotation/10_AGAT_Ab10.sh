@@ -1,14 +1,3 @@
-#!/bin/bash
-#SBATCH --job-name=AGAT_Ab10
-#SBATCH --output=AGAT_Ab10.out
-#SBATCH --partition=batch
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=mjb51923@uga.edu
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=1
-#SBATCH --mem=50gb
-#SBATCH --time=10:00:00
-
 #Load the modules 
 module load AGAT/1.1.0
 
