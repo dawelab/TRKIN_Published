@@ -1,4 +1,3 @@
-###This section is from online and parses the .delta file
 library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -11,7 +10,7 @@ library(RColorBrewer)
 options(ucscChromosomeNames=FALSE)
 
 #This loads the coords
-coords <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/K10L2_DotPlot/Ab10_v_Ab10_nucmer.coords", header=FALSE)
+coords <- read.delim("Ab10_v_Ab10_nucmer.coords", header=FALSE)
 #Drop the first two lines of header
 coords <- coords[-c(1,2,3),]
 #Define the column names
