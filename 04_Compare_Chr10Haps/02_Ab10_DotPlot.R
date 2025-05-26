@@ -50,7 +50,7 @@ K180grob <- text_grob("Knob180", face = "bold", color = "darkorange3", size = 25
 
 
 #These are descriptions of relevant regions
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper/Ab10_Ab10_DotPlot.pdf", height = 8, width = 8)
+pdf("Ab10_Ab10_DotPlot.pdf", height = 8, width = 8)
 dotplot <- ggplot() +
   geom_point(data=coords_filt, alpha = 0.1, aes(x=s1_MB, y=s2_MB, color=`%IDY` )) +
   scale_colour_viridis_c(direction=-1, breaks = c(89, 99), labels = c("85","100")) +
@@ -92,7 +92,7 @@ dev.off()
 
 nrpd2e2grob <- text_grob("9 Copies\nnrpd2/e2", face = "bold", color = "red", size = 20)
 
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Compare_Chr10Haps/Ab10_Ab10_DotPlot_nrpd2e2.pdf", height=8, width=8)
+pdf("Ab10_Ab10_DotPlot_nrpd2e2.pdf", height=8, width=8)
 Share <- dotplot +
   scale_x_continuous(breaks=c(42,43,44,45,46,47,48,49), limits=c(41.730926, 48.210892)) +
   scale_y_continuous(breaks=c(42,43,44,45,46,47,48,49), limits=c(41.730926, 48.210892)) +
