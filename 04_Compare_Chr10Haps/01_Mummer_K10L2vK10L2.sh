@@ -1,16 +1,5 @@
-#!/bin/bash
-#SBATCH --job-name=Mummer_K10L2vK10L2
-#SBATCH --output=Mummer_K10L2vK10L2.out
-#SBATCH --partition=batch
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=mjb51923@uga.edu
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=30
-#SBATCH --mem=100gb
-#SBATCH --time=72:00:00
-
 #Define Variables
-DIR="/scratch/mjb51923/TRKIN_CRISPR/out_paper/K10L2_Mummer"
+DIR=""
 
 #Load Modules
 module load MUMmer/4.0.0rc1-GCCcore-11.3.0
