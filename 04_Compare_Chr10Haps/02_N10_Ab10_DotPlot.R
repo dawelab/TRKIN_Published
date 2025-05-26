@@ -1,4 +1,3 @@
-###This section is from online and parses the .delta file
 library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -10,7 +9,7 @@ library(ggpubr)
 options(ucscChromosomeNames=FALSE)
 
 #This loads the coords
-coords <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/K10L2_DotPlot/N10_v_Ab10_nucmer.coords", header=FALSE)
+coords <- read.delim("N10_v_Ab10_nucmer.coords", header=FALSE)
 #Drop the first two lines of header
 coords <- coords[-c(1,2,3),]
 #Define the column names
@@ -50,7 +49,7 @@ K180grob <- text_grob("Knob\n180", face = "bold", color = "darkorange3", rot=0, 
 
 
 #These are descriptions of relevant regions
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper/N10_Ab10_DotPlot.pdf", height = 8, width = 8)
+pdf("N10_Ab10_DotPlot.pdf", height = 8, width = 8)
 dotplot <- ggplot() +
   geom_point(data=coords_filt, alpha = 0.2, aes(x=s1_MB, y=s2_MB, color=`%IDY` )) +
   scale_colour_viridis_c(direction=-1, breaks = c(89, 99.85), labels = c("85","100")) +
@@ -95,7 +94,7 @@ dev.off()
 
 
 
-pdf("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Paper/N10_Ab10_DotPlot_Shared.pdf", height=8, width=8)
+pdf("N10_Ab10_DotPlot_Shared.pdf", height=8, width=8)
 Share <- dotplot +
   xlim(7750000, 8000000)
 Share
