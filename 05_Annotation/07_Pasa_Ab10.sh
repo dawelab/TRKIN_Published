@@ -50,7 +50,7 @@ Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_Ab10/annotationCompare.config -A -g $REF
 #####################################################################
 
 #Load the updated genome anotation
-$PASA_HOME/scripts/Load_Current_Gene_Annotations.dbi -c $OUTDIR/Pasa_Ab10/alignAssembly.config -g $REF -P $OUTDIR/Pasa_Ab10/SQLite_db.gene_structures_post_PASA_updates.2091228.gff3
+$PASA_HOME/scripts/Load_Current_Gene_Annotations.dbi -c $OUTDIR/Pasa_Ab10/alignAssembly.config -g $REF -P $OUTDIR/Pasa_Ab10/PASA_updates.1.gff3
 
 #Update the annotations with the transcript data again
 Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_Ab10/annotationCompare.config -A -g $REF -t $OUTDIR/Pasa_Ab10/transcripts_B73Ab10.fasta --CPU 24
@@ -58,7 +58,7 @@ Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_Ab10/annotationCompare.config -A -g $REF
 #####################################################################
 
 #Load the updated genome anotation
-$PASA_HOME/scripts/Load_Current_Gene_Annotations.dbi -c $OUTDIR/Pasa_Ab10/alignAssembly.config -g $REF -P $OUTDIR/Pasa_Ab10/HiFiAb10.genes.gff3
+$PASA_HOME/scripts/Load_Current_Gene_Annotations.dbi -c $OUTDIR/Pasa_Ab10/alignAssembly.config -g $REF -P $OUTDIR/Pasa_Ab10/PASA_updates.2.gff3
 
 #Update the annotations with the transcript data again
 Launch_PASA_pipeline.pl -c $OUTDIR/Pasa_Ab10/annotationCompare.config -A -g $REF -t $OUTDIR/Pasa_Ab10/transcripts_B73Ab10.fasta --CPU 24
