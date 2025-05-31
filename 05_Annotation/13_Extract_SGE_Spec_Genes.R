@@ -8,18 +8,18 @@ library(pafr)
 library(Rsamtools)
 
 #Set the working directory
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Annotation")
+setwd("")
 
 #Load in the GFF files and the EnTap files for K10L2 and Ab10
-K10L2_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/CI66_K10L2.genes.edit.gff3", header = FALSE)
+K10L2_GFF <- read.delim("CI66_K10L2_v1.gene.sorted.gff3", header = FALSE)
 colnames(K10L2_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
-K10L2_entap  <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/K10L2_entap_results.tsv")
+K10L2_entap  <- read.delim("K10L2_entap_results.tsv")
 
-Ab10_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/HiFiAb10.genes.edit.gff3", header = FALSE)
+Ab10_GFF <- read.delim("B73_Ab10_HiFi_v2.gene.sorted.gff3", header = FALSE)
 #This drops an unnecessary column at the top
 Ab10_GFF <- Ab10_GFF[-c(1),]
 colnames(Ab10_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
-Ab10_entap <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Ab10_entap_results.tsv")
+Ab10_entap <- read.delim("Ab10_entap_results.tsv")
 
 #This reformats the GFF file to be compatible with the entap file
 K10L2_GFF_GENE <- subset(K10L2_GFF, feature == "gene")
