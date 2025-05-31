@@ -14,19 +14,16 @@ module load EnTAP/1.0.0-foss-2022a
 module load SAMtools/1.14-GCC-11.2.0
 
 #Define variables
-DIR=/scratch/mjb51923/TRKIN_CRISPR/out_paper/Entap
+OUTDIR=""
+DIR=$OUTDIR/Entap
 
 #Do the basic EnTAP configuration
 cd $DIR/K10L2/
-#EnTAP --config --ini /home/mjb51923/entap_config.ini
+EnTAP --config --ini /path/to/entap_config.ini
 
-#Configure my databases to be diamond databases
-######################you will need to redo this when the nr database is ready 
 #To get EnTAP running you need to download these databases and then run the following commands. Refer to here for instructions https://entap.readthedocs.io/en/latest/Getting_Started/Configuration/configuration.html
-
-EnTAP --config --ini /home/mjb51923/entap_config.ini -i /scratch/mjb51923/TRKIN_CRISPR/out_paper/AGAT/CI66_K10L2.v2.cds.fasta -d /scratch/mjb51923/TRKIN_CRISPR/out_paper/Entap/uniprot_sprot.fasta -d /scratch/mjb51923/TRKIN_CRISPR/out_paper/Entap/RefSeq.plant.protein.faa -d /scratch/mjb51923/TRKIN_CRISPR/out_paper/Entap/nr.fasta --overwrite
+#Configure entap and set up diamond databases
+EnTAP --config --ini /path/to/entap_config.ini -i $OUTDIR/AGAT/CI66_K10L2_v1.cds.fasta -d $OUTDIR/Entap/uniprot_sprot.fasta -d $OUTDIR/Entap/RefSeq.plant.protein.faa -d $OUTDIR/Entap/nr.fasta --overwrite
 
 #This runs entap using the diamond databases from the above step. runP means it will do frame selection, convert to protein, and then use blastp against the databases as I am providing a CDS transcriptome
-module load EnTAP/1.0.0-foss-2022a
-
-EnTAP --runP --ini /home/mjb51923/entap_config.ini -i /scratch/mjb51923/TRKIN_CRISPR/out_paper/AGAT/CI66_K10L2.v2.cds.fasta -d /scratch/mjb51923/TRKIN_CRISPR/out_paper/Entap/K10L2/entap_outfiles/bin/uniprot_sprot.dmnd -d /scratch/mjb51923/TRKIN_CRISPR/out_paper/Entap/K10L2/entap_outfiles/bin/RefSeq.dmnd -d /scratch/mjb51923/TRKIN_CRISPR/out_paper/Entap/K10L2/entap_outfiles/bin/nr.dmnd --out-dir /scratch/mjb51923/TRKIN_CRISPR/out_paper/Entap/K10L2/entap_outfiles_nr_update -t 24
+EnTAP --runP --ini /path/to/entap_config.ini -i $OUTDIR/AGAT/CI66_K10L2_v1.cds.fasta  -d $OUTDIR/Entap/K10L2/entap_outfiles/bin/uniprot_sprot.dmnd -d $OUTDIR/Entap/K10L2/entap_outfiles/bin/RefSeq.dmnd -d $OUTDIR/Entap/K10L2/entap_outfiles/bin/nr.dmnd --out-dir $OUTDIR/Entap/K10L2/entap_outfiles_nr_update -t 24
