@@ -19,13 +19,13 @@ IT=$SLURM_ARRAY_TASK_ID
 NAME=$(awk NR==${IT}'{print $1}' $OUT/Hisat2/List.txt)
 
 #Define the masked reference 
-REF=$OUT/RepeatMasker/Ab10_HiFi_v2_corrected.fa.masked
+REF=$OUT/RepeatMasker/B73_Ab10_HiFi_v2.fa.masked
 
 #Build a hisat2 reference
 #I ran this command separatly first to avoid having the reference re built every time
-#hisat2-build $REF Ab10_HiFi_v2_corrected.fa.masked
+#hisat2-build $REF B73_Ab10_HiFi_v2.fa.masked
 #Align the RNAseq reads to the masked reference
-hisat2 -x $OUT/Hisat2/Ab10_HiFi_v2_corrected.fa.masked -p $THREADS -1 $READDIR/${NAME}_R1_paired.fq -2 $READDIR/${NAME}_R2_paired.fq -S $OUT/Hisat2/${NAME}.sam
+hisat2 -x $OUT/Hisat2/B73_Ab10_HiFi_v2.fa.masked -p $THREADS -1 $READDIR/${NAME}_R1_paired.fq -2 $READDIR/${NAME}_R2_paired.fq -S $OUT/Hisat2/${NAME}.sam
 #Cenvert the sam file output by hisat2 to a bam file
 samtools view -bS $OUT/Hisat2/${NAME}.sam > $OUT/Hisat2/${NAME}.bam
 #Sorted the bam file
