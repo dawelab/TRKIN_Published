@@ -1,14 +1,3 @@
-#!/bin/bash
-#SBATCH --job-name=EnTAP_K10L2
-#SBATCH --output=EnTAP_K10L2.out
-#SBATCH --partition=batch
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=mjb51923@uga.edu
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=24
-#SBATCH --mem=200gb
-#SBATCH --time=100:00:00
-
 #load the modules
 module load EnTAP/1.0.0-foss-2022a
 module load SAMtools/1.14-GCC-11.2.0
