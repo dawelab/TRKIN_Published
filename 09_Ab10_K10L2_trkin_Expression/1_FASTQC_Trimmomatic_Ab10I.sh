@@ -1,19 +1,8 @@
-#!/usr/bin/bash
-#SBATCH --partition=batch 
-#SBATCH -J FASTQC_Trimmomatic_Ab10I
-#SBATCH --output FASTQC_Trimmomatic_Ab10I.out
-#SBATCH --mem=100GB
-#SBATCH --time=10:00:00
-#SBATCH	--nodes=1
-#SBATCH	--ntasks=12
-#SBATCH --mail-user=meghan.brady@uga.edu
-#SBATCH --mail-type=BEGIN,END
-
-
 module load FastQC/0.11.9-Java-11
 module load Trimmomatic/0.39-Java-13
 
-RNA_DIR="/scratch/mjb51923/raw_reads/RNA/Ab10I"
+#From doi 10.1101/gad.340679.120
+RNA_DIR="/path/to/reads"
 OUT_DIR="/scratch/mjb51923/TRKIN_CRISPR/out/Ab10I_Trimmed"
 
 
@@ -49,7 +38,6 @@ ILLUMINACLIP:$EBROOTTRIMMOMATIC/adapters/TruSeq3-PE-2.fa:2:30:10:1:keepBothReads
 done
 
 #This rechecks quality 
-
 for i in Ab10IMMR_1_1_paired.fastq \
 Ab10IMMR_1_2_paired.fastq \
 Ab10IMMR_2_1_paired.fastq \
