@@ -7,44 +7,42 @@ library(ggplot2)
 library(pafr)
 library(Rsamtools)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Gene_Orthologs")
+setwd("")
 
-ORTHO <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/HiFiAb10.Ab10hapProtein.LongestIsoform__v__CI66_K10L2.K10L2hapProtein.LongestIsoform.tsv")
+#This is the file generated in 07.5
+ORTHO <- read.delim("HiFiAb10.Ab10hapProtein.LongestIsoform__v__CI66_K10L2.K10L2hapProtein.LongestIsoform.tsv")
 
-K10L2_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/CI66_K10L2_v1.gene.v2.gff3", header = FALSE)
+#I manually removed commented out lines from all gff files for compatibility with R
+
+#This file was genetated in 05.08
+K10L2_GFF <- read.delim("CI66_K10L2_v1.gene.gff3", header = FALSE)
 colnames(K10L2_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
-Ab10_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Ab10_HiFi_v2_corrected.gene.v2.gff3", header = FALSE)
+#This file was genetated in 05.08
+Ab10_GFF <- read.delim("B73_Ab10_HiFi_v2.gene.gff3", header = FALSE)
 colnames(Ab10_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
 
 #This section alters the K10L2 GFF to be compatible with the OrthoFinder Output
 K10L2_GFF_GENE <- subset(K10L2_GFF, feature == "gene")
-
 K10L2_GFF_GENE_temp1 <- separate(K10L2_GFF_GENE, col=attribute, into= c("ID", "biotype", "logic_name"), sep= ';')
-
 K10L2_GFF_GENE_temp2 <- separate(K10L2_GFF_GENE_temp1, col= ID, into=c("Trash", "ID"), sep="=")
-
 K10L2_GFF_GENE_temp3 <- K10L2_GFF_GENE_temp2[,c("seqname", "start", "end", "ID")]
 colnames(K10L2_GFF_GENE_temp3) <- c("K10L2_seqname", "K10L2_start", "K10L2_end", "K10L2_ID")
-
 K10L2_GFF_GENE <- K10L2_GFF_GENE_temp3
 
 #This section alters the Ab10 GFF to be compatible with the OrthoFinder Output
 Ab10_GFF_GENE <- subset(Ab10_GFF, feature == "gene")
-
 Ab10_GFF_GENE_temp1 <- separate(Ab10_GFF_GENE, col=attribute, into= c("ID", "biotype", "logic_name"), sep= ';')
-
 Ab10_GFF_GENE_temp2 <- separate(Ab10_GFF_GENE_temp1, col= ID, into=c("Trash", "ID"), sep="=")
-
 Ab10_GFF_GENE_temp3 <- Ab10_GFF_GENE_temp2[,c("seqname", "start", "end", "ID")]
 colnames(Ab10_GFF_GENE_temp3) <- c("Ab10_seqname", "Ab10_start", "Ab10_end", "Ab10_ID")
-
 Ab10_GFF_GENE_temp3$Ab10_ID <-  gsub("gene:", "", Ab10_GFF_GENE_temp3$Ab10_ID)
-
 Ab10_GFF_GENE <- Ab10_GFF_GENE_temp3
 
-#Determine which genes might be Potential TEs 
+#This section checks if any of these genes might actually be TEs 
+
+#This section prepares the data for Ab10
 Ab10_GFF_EXON <- subset(Ab10_GFF, feature == "exon")
 Ab10_GFF_EXON <- separate(Ab10_GFF_EXON, col = "attribute" , into = c("geneID", "Ab10_Iso"), sep=";")
 Ab10_GFF_EXON$geneID <- gsub("ID=", "", Ab10_GFF_EXON$geneID)
@@ -53,7 +51,7 @@ Ab10_GFF_EXON_BED <- Ab10_GFF_EXON[,c("seqname","start", "end", "geneID")]
 colnames(Ab10_GFF_EXON_BED) <- c("chr","start", "end", "geneID")
 write.table(Ab10_GFF_EXON_BED, "Ab10_GFF_EXON_BED.bed", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = '\t')
 
-
+#This section prepares the data for K10L2
 K10L2_GFF_EXON <- subset(K10L2_GFF, feature == "exon")
 K10L2_GFF_EXON <- separate(K10L2_GFF_EXON, col = "attribute" , into = c("geneID", "K10L2_Iso"), sep=";")
 K10L2_GFF_EXON$geneID <- gsub("ID=", "", K10L2_GFF_EXON$geneID)
@@ -62,15 +60,18 @@ K10L2_GFF_EXON_BED <- K10L2_GFF_EXON[,c("seqname","start", "end", "geneID")]
 colnames(K10L2_GFF_EXON_BED) <- c("chr","start", "end", "geneID")
 write.table(K10L2_GFF_EXON_BED, "K10L2_GFF_EXON_BED.bed", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = '\t')
 
-#This section downloads the TE annotations and removes any overlapping orthologs
-Ab10_TE <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Ab10_HiFi_v2_corrected.TE.gff", header=FALSE)
+#This section loads in the TE annotations and removes any overlapping orthologs. 
+
+#This file was generated in 05.01 and this section prepares the data
+Ab10_TE <- read.delim("B73_Ab10_HiFi_v2..TE.gff", header=FALSE)
 colnames(Ab10_TE) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 Ab10_TE_Ab10 <- subset(Ab10_TE, seqname == "chr10")
 Ab10_TE_Ab10_BED <- Ab10_TE_Ab10[,c("seqname", "start", "end")]
 Ab10_TE_Ab10_BED <- subset(Ab10_TE_Ab10_BED, seqname == "chr10")
 write.table(Ab10_TE_Ab10_BED, "Ab10_TE_Ab10.bed", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = '\t')
 
-K10L2_TE <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/CI66_K10L2_v1.TE.gff", header=FALSE)
+#This file was generated in 05.01 and this section prepares the data
+K10L2_TE <- read.delim("CI66_K10L2_v1.TE.gff", header=FALSE)
 colnames(K10L2_TE) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 K10L2_TE_K10L2 <- subset(K10L2_TE, seqname == "K10L2")
 K10L2_TE_K10L2_BED <- K10L2_TE_K10L2[,c("seqname", "start", "end")]
