@@ -8,6 +8,7 @@ setwd("")
 
 #I manually removed all commented out lines for compatibility with R
 
+This comes from 05.08
 Ab10_GFF <- read.delim("B73_Ab10_HiFi_v2.gene.gff3", header = FALSE)
 colnames(Ab10_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
