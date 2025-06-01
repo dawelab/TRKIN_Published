@@ -29,9 +29,6 @@ Ab10_GFF_GENE_f2 <- subset(Ab10_GFF_GENE_f1, seqname == "chr10")
 #This extracts the Ab10 Specific region genes
 Ab10_SPEC <- subset(Ab10_GFF_GENE_f2, start >= 141187279 & ((start >= 142472000 & end <= 153145000) | (start >= 168235374)))
 
-#This drops 8 copies of the 9 copies of nrpd2/e2 as they seem to be skewing the analysis 
-Ab10_SPEC <- subset(Ab10_SPEC, biotype != "g5851.t1" & biotype != "g5853.t1" & biotype != "g5854.t1" & biotype != "g5856.t1" & biotype != "g5858.t1" & biotype != "g5860.t1" & biotype != "g5862.t1" & biotype != "g5863.t1" & biotype != "g5880.t1" & biotype != "g5879.t1" & biotype != "g5874.t1")
-
 #This builds the custom gene list
 geneNames <- Ab10_GFF_GENE_f1$biotype
 geneList <- factor(as.integer(geneNames %in% Ab10_SPEC$biotype))
