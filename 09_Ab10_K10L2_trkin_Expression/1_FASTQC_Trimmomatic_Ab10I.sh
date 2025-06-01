@@ -3,7 +3,7 @@ module load Trimmomatic/0.39-Java-13
 
 #From doi 10.1101/gad.340679.120
 RNA_DIR="/path/to/reads"
-OUT_DIR="/scratch/mjb51923/TRKIN_CRISPR/out/Ab10I_Trimmed"
+OUT_DIR=""
 
 
 #This checks data quality
