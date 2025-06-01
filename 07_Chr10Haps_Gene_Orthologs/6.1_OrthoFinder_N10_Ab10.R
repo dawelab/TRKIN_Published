@@ -80,7 +80,8 @@ Ab10_entap_SPEC<- merge(Ab10_SPEC, Ab10_entap, by="Query.Sequence")
 #This writes this out
 write.csv(Ab10_entap_SPEC, "N10Ab10Specific_Orthologs.csv", row.names = FALSE, quote = TRUE)
 
-#This creates the links color
+
+#This separates the regions so that they can be colored differently later
 Uninverted <- subset(OrthoLink_10_temp1, Ab10_start < 143000000)
 Uninverted_start <- Uninverted[,c("B73_seqname", "B73_start", "B73_end")]
 Uninverted_end <- Uninverted[,c("Ab10_seqname", "Ab10_start", "Ab10_end")]
