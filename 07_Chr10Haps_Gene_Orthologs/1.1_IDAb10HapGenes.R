@@ -2,18 +2,21 @@
 install.packages("tidyverse")
 library(tidyverse)
 
-setwd("/scratch/mjb51923/TRKIN_CRISPR/out_paper/OrthoFinder")
+setwd("")
 
-data <- readLines("/scratch/mjb51923/TRKIN_CRISPR/out_paper/Liftoff/Ab10_HiFi_v2_corrected.gene.v2.sorted.gff3")
+#Load the data
+data <- readLines("B73_Ab10_HiFi_v2.gene.sorted.gff3)
+#Filter out any commented out lines
 filtered_data <- data[!grepl("^#", data)]
 
-write.table(filtered_data, "HiFiAb10.genes.edit.gff3", row.names = FALSE, quote = FALSE)
+#Write the filtered file
+write.table(filtered_data, "B73_Ab10_HiFi_v2.gene.edit.gff3", row.names = FALSE, quote = FALSE)
 
-#Removed the header to make this file compatible with R 
-B73Ab10_GFF <- read.delim("HiFiAb10.genes.edit.gff3", header = FALSE)
+#I manually removed the header from this file to make it compatible with R 
+B73Ab10_GFF <- read.delim(B73_Ab10_HiFi_v2.gene.edit.gff3", header = FALSE)
 colnames(B73Ab10_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
-#The R1 gene is at 141115174 in the Ab10HiFI genome
+#The R1 gene is at 141115174 in the B73_Ab10_HiFi_v2, this marks the start of the Ab10 haplotype
 
 #This selects only genes on the Ab10 haplotype
 Ab10_GFF <- subset(B73Ab10_GFF, feature == "gene" & seqname == "chr10" & start >= 141115174)
