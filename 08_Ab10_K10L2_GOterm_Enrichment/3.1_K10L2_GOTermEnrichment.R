@@ -6,6 +6,7 @@ library(dplyr)
 
 setwd("")
 
+#I manually removed all commented out lines for compatibility with R
 
 #This comes from 05.08
 K10L2_GFF <- read.delim("CI66_K10L2_v1.gene.v2.gff3", header = FALSE)
