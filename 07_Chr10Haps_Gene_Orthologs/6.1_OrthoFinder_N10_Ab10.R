@@ -18,7 +18,7 @@ ORTHO <- read.delim("Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.Protein.LongestIsoform
 B73_GFF <- read.delim("Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.nohead.gff3", header = FALSE)
 colnames(B73_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
-#This the Ab10 annotation from 
+#This the Ab10 annotation from 05.08
 Ab10_GFF <- read.delim("B73_Ab10_HiFi_v2.gene.nohead.gff3", header = FALSE)
 colnames(Ab10_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
