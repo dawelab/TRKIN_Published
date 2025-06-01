@@ -1,19 +1,8 @@
-#!/usr/bin/bash
-#SBATCH --partition=batch 
-#SBATCH -J FASTQC_Trimmomatic_K10L2
-#SBATCH --output /scratch/mjb51923/TRKIN_CRISPR/scripts/FASTQC_Trimmomatic_K10L2.out
-#SBATCH --mem=100GB
-#SBATCH --time=10:00:00
-#SBATCH	--nodes=1
-#SBATCH	--ntasks=12
-#SBATCH --mail-user=meghan.brady@uga.edu
-#SBATCH --mail-type=BEGIN,END
-
-
 module load FastQC/0.11.9-Java-11
 module load Trimmomatic/0.39-Java-13
 
-RNA_DIR="/scratch/mjb51923/raw_reads/RNA/K10L2"
+#From doi 10.1101/gad.340679.120
+RNA_DIR="/path/to/reads"
 OUT_DIR="/scratch/mjb51923/TRKIN_CRISPR/out/K10L2_Trimmed"
 
 
