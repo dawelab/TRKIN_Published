@@ -1,26 +1,17 @@
-#!/usr/bin/bash
-#SBATCH --partition=highmem_p 
-#SBATCH -J HISAT2_Ab10I
-#SBATCH --output HISAT2_Ab10I.out
-#SBATCH --mem=500GB
-#SBATCH --time=48:00:00
-#SBATCH	--nodes=1
-#SBATCH	--ntasks=19
-#SBATCH --mail-user=meghan.brady@uga.edu
-#SBATCH --mail-type=BEGIN,END
-
 #load modules
 module load HISAT2/3n-20201216-gompi-2022a
 module load SAMtools/1.16.1-GCC-11.3.0
 
-#Define Variables
-READ_DIR="/scratch/mjb51923/TRKIN_CRISPR/out/Ab10I_Trimmed"
-OUT_DIR="/scratch/mjb51923/TRKIN_CRISPR/out/RNA_Aln"
-REF="/scratch/mjb51923/ref_genomes/Zm-B73_AB10-REFERENCE-NAM-1.0.fa"
+#From doi 10.1101/gad.340679.120
+RNA_DIR="/path/to/reads"
+OUT_DIR=""
+#From doi 10.1186/s13059-020-02029-9
+REF="Zm-B73_AB10-REFERENCE-NAM-1.0.fa"
 
 #Index the reference
-#hisat2-build $REF $REF
+hisat2-build $REF $REF
 
+#Align the Ab10 and N10 sequences to the reference, sort and index the bam files
 for i in Ab10IMMR_1 \
 Ab10IMMR_2 \
 Ab10IMMR_3 
