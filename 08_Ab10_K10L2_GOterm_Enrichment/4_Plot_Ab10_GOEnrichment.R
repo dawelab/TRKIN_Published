@@ -6,32 +6,28 @@ library(grid)
 library(egg)
 library(tidyverse)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/GOterm_Enrichment")
+setwd("")
 
 
-Ab10_GFF <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/HiFiAb10.genes.edit.gff3", header = FALSE)
+Ab10_GFF <- read.delim("B73_Ab10_HiFi_v2.gene.gff3", header = FALSE)
 #This drops an unnecessary column at the top
 Ab10_GFF <- Ab10_GFF[-c(1),]
 colnames(Ab10_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
 #This section alters the Ab10 GFF to be compatible with the OrthoFinder Output
 Ab10_GFF_GENE <- subset(Ab10_GFF, feature == "gene")
-
 Ab10_GFF_GENE_temp1 <- separate(Ab10_GFF_GENE, col=attribute, into= c("ID", "biotype", "logic_name"), sep= ';')
-
 Ab10_GFF_GENE_temp1$biotype <-  gsub("Name=", "", Ab10_GFF_GENE_temp1$biotype)
-
 Ab10_GFF_GENE <- Ab10_GFF_GENE_temp1
 
-#remove the scaffolds as I'm not sure where they come from so they might obscure the analysis
+#remove the scaffolds 
 Ab10_GFF_GENE_f1 <- subset(Ab10_GFF_GENE, seqname == "chr1" | seqname == "chr2" | seqname == "chr3" | seqname == "chr4" | seqname == "chr5" | seqname == "chr6" | seqname == "chr7" | seqname == "chr8" | seqname == "chr9" | seqname == "chr10")
 
+#Select only chr10
 Ab10_GFF_GENE_f2 <- subset(Ab10_GFF_GENE_f1, seqname == "chr10")
 
 #This extracts the Ab10 Specific region genes
 Ab10_SPEC<- subset(Ab10_GFF_GENE_f2, start >= 141187279 & ((start >= 142472000 & end <= 153145000) | (start >= 168235374)))
-
-#This drops the 9 copies of 
 
 #This builds the custom gene list
 geneNames <- Ab10_GFF_GENE_f1$biotype
@@ -40,15 +36,16 @@ names(geneList) <- geneNames
 str(geneList)
 
 #This builds the custom GO term mapping 
-Ab10_entap <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/GOTermEnrichment/Ab10_entap_results.tsv")
+#This file is derived from step 05.12
+Ab10_entap <- read.delim("Ab10_entap_results.tsv")
 Ab10_entap$GO_ALL <- paste(Ab10_entap$EggNOG.GO.Biological, Ab10_entap$EggNOG.GO.Cellular, Ab10_entap$EggNOG.GO.Molecular, sep = ",")
 
 Ab10_GO <- Ab10_entap[,c("Query.Sequence" ,"GO_ALL")]
 Ab10_GO$GO_ALL <- gsub("NA,", "", Ab10_GO$GO_ALL)
 write.table(Ab10_GO, file="Ab10_GOMapping.tbl", quote=FALSE, sep='\t', row.names = FALSE, col.names = FALSE)
 
-#This builds the topgo object
-#node size says 10 genes must be assigned that GO to include it
+#This builds the topgo object for the Biological, Cellular, and Molecular categories
+#node size requires 10 genes must be assigned that GO to include it
 DATA_BP <- new("topGOdata", description="Ab10", ontology = "BP", allGenes = geneList, nodeSize = 10, annot = annFUN.file, file = "Ab10_GOMapping.tbl")
 DATA_MF <- new("topGOdata", description="Ab10", ontology = "MF", allGenes = geneList, nodeSize = 10, annot = annFUN.file, file = "Ab10_GOMapping.tbl")
 DATA_CC <- new("topGOdata", description="Ab10", ontology = "CC", allGenes = geneList, nodeSize = 10, annot = annFUN.file, file = "Ab10_GOMapping.tbl")
@@ -59,16 +56,15 @@ ENR$Type <- gsub("Biological Process", "DATA_BP", ENR$Type)
 ENR$Type <- gsub("Cellular Component", "DATA_CC", ENR$Type)
 ENR$Type <- gsub("Molecular Function", "DATA_MF", ENR$Type)
 
-#This loads in the entap results 
-Ab10_entap <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/GOTermEnrichment/Ab10_entap_results.tsv")
+#This loads in the entap results, this file is derived from step 05.12
+Ab10_entap <- read.delim("Ab10_entap_results.tsv")
 Ab10_entap$GO_ALL <- paste(Ab10_entap$EggNOG.GO.Biological, Ab10_entap$EggNOG.GO.Cellular, Ab10_entap$EggNOG.GO.Molecular, sep = ",")
 
 #This merges the entap results and GFF file
 MERGE <- merge(Ab10_SPEC, Ab10_entap, by.x="biotype", by.y="Query.Sequence")
-
 MERGE_GO_ALL <- data.frame("chr"=c(), "start"=c(), "end"=c(), "term"=c(), "enrich"=c(), "p"=c(), "logp"=c(), "type"=c() )
 
-
+#This function identifies the genes associated with each GO term
 GO2GENES <- function(GO, DATA, i) {
   #Extract a list of genes associated with this term 
   LISTGO <- genesInTerm(get(DATA), whichGO = GO)
@@ -103,6 +99,7 @@ MERGE_GO_ALL <- MERGE_GO_ALL[order(MERGE_GO_ALL$enrich, decreasing = TRUE),]
 #This defines it as a factor to maintain the ordering
 MERGE_GO_ALL$term <- factor(MERGE_GO_ALL$term, levels=rev(unique(MERGE_GO_ALL$term)))
 
+#This plots the GO term enrichment
 pdf("Ab10_GOterm_Enrichment.pdf", height=10.5, width=7)
 p <- ggplot() +
   geom_point(data=MERGE_GO_ALL, aes(x=term, y=start, color=as.numeric(enrich), size=logp), shape=4) +
