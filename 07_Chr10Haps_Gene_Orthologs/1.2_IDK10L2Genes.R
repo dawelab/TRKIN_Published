@@ -2,18 +2,21 @@
 #install.packages("tidyverse")
 library(tidyverse)
 
-setwd("/scratch/mjb51923/TRKIN_CRISPR/out_paper/OrthoFinder")
+setwd("")
 
-data <- readLines("/scratch/mjb51923/TRKIN_CRISPR/out_paper/Liftoff/CI66_K10L2_v1.gene.v2.sorted.gff3")
+#Load the data
+data <- readLines("CI66_K10L2_v1.gene.sorted.gff3")
+#Filter any commented out lines
 filtered_data <- data[!grepl("^#", data)]
 
+#Write out the filtered file
 write.table(filtered_data, "CI66_K10L2.genes.edit.gff3", row.names = FALSE, quote = FALSE)
 
-#Removed the header to make this file compatible with R 
+#Manually emoved the header from this file to make it compatible with R 
 K10L2_GFF <- read.delim("CI66_K10L2.genes.edit.gff3", header = FALSE)
 colnames(K10L2_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
-#The R1 gene is at 2730186 in the K10L2HiFI genome
+#The R1 gene is at 2730186 in the CI66_K10L2 v1 genome. The R1 gene marks the start of the K10L2 haplotyoe
 
 #This selects only genes on the K10L2 haplotype
 K10L2_GFF <- subset(K10L2_GFF, feature == "gene" & seqname == "K10L2" & start >= 2730186)
