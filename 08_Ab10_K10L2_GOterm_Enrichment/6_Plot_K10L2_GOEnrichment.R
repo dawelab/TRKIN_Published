@@ -5,20 +5,16 @@ library(RColorBrewer)
 library(grid)
 library(egg)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/GOterm_Enrichment")
+setwd("")
 
-K10L2_GFF <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/CI66_K10L2_v1.gene.v2.gff3", header = FALSE)
+K10L2_GFF <- read.delim("CI66_K10L2_v1.gene.gff3", header = FALSE)
 colnames(K10L2_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
 #This section alters the K10L2 GFF to be compatible with the OrthoFinder Output
 K10L2_GFF_GENE <- subset(K10L2_GFF, feature == "gene")
-
 K10L2_GFF_GENE_temp1 <- separate(K10L2_GFF_GENE, col=attribute, into= c("ID", "biotype", "logic_name"), sep= ';')
-
 K10L2_GFF_GENE_temp1$biotype <-  gsub("Name=", "", K10L2_GFF_GENE_temp1$biotype)
-
 K10L2_GFF_GENE <- K10L2_GFF_GENE_temp1
-
 K10L2_GFF_GENE_f1 <- subset(K10L2_GFF_GENE, seqname == "K10L2")
 
 #This extracts the K10L2 Specific region genes
@@ -31,15 +27,16 @@ names(geneList) <- geneNames
 str(geneList)
 
 #This builds the custom GO term mapping 
-K10L2_entap <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/GOTermEnrichment/K10L2_entap_results.tsv")
+#This file is derived from step 05.12
+K10L2_entap <- read.delim("K10L2_entap_results.tsv")
 K10L2_entap$GO_ALL <- paste(K10L2_entap$EggNOG.GO.Biological, K10L2_entap$EggNOG.GO.Cellular, K10L2_entap$EggNOG.GO.Molecular, sep = ",")
 
 K10L2_GO <- K10L2_entap[,c("Query.Sequence" ,"GO_ALL")]
 K10L2_GO$GO_ALL <- gsub("NA,", "", K10L2_GO$GO_ALL)
 write.table(K10L2_GO, file="K10L2_GOMapping.tbl", quote=FALSE, sep='\t', row.names = FALSE, col.names = FALSE)
 
-#This builds the topgo object
-#node size says 10 genes must be assigned that GO to include it
+#This builds the topgo object for the Biological, Cellular, and Molecular categories
+#node size requires 10 genes must be assigned that GO to include it
 DATA_BP <- new("topGOdata", description="K10L2", ontology = "BP", allGenes = geneList, nodeSize = 10, annot = annFUN.file, file = "K10L2_GOMapping.tbl")
 DATA_MF <- new("topGOdata", description="K10L2", ontology = "MF", allGenes = geneList, nodeSize = 10, annot = annFUN.file, file = "K10L2_GOMapping.tbl")
 DATA_CC <- new("topGOdata", description="K10L2", ontology = "CC", allGenes = geneList, nodeSize = 10, annot = annFUN.file, file = "K10L2_GOMapping.tbl")
@@ -54,15 +51,15 @@ ENR$Type <- gsub("Molecular Function", "DATA_MF", ENR$Type)
 ENR <- subset(ENR, classicFisher <= 0.01)
 
 #This loads in the entap results 
-K10L2_entap <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/GOTermEnrichment/K10L2_entap_results.tsv")
+#This file is derived from step 05.12
+K10L2_entap <- read.delim("K10L2_entap_results.tsv")
 K10L2_entap$GO_ALL <- paste(K10L2_entap$EggNOG.GO.Biological, K10L2_entap$EggNOG.GO.Cellular, K10L2_entap$EggNOG.GO.Molecular, sep = ",")
 
 #This merges the entap results and GFF file
 MERGE <- merge(K10L2_SPEC, K10L2_entap, by.x="biotype", by.y="Query.Sequence")
-
 MERGE_GO_ALL <- data.frame("chr"=c(), "start"=c(), "end"=c(), "term"=c(), "enrich"=c(), "p"=c(), "logp"=c(), "type"=c() )
 
-
+#This function identifies the genes associated with each GO term
 GO2GENES <- function(GO, DATA, i) {
   #Extract a list of genes associated with this term 
   LISTGO <- genesInTerm(get(DATA), whichGO = GO)
@@ -97,7 +94,7 @@ MERGE_GO_ALL <- MERGE_GO_ALL[order(MERGE_GO_ALL$enrich, decreasing = TRUE),]
 #This defines it as a factor to maintain the ordering
 MERGE_GO_ALL$term <- factor(MERGE_GO_ALL$term, levels=rev(unique(MERGE_GO_ALL$term)))
 
-
+#This plots the GO term enrichment
 pdf("K10L2_GOterm_Enrichment.pdf", height=10, width=5)
 p <- ggplot() +
   geom_point(data=MERGE_GO_ALL, aes(y=start, x=term, color=as.numeric(enrich), size=logp), shape=4) +
