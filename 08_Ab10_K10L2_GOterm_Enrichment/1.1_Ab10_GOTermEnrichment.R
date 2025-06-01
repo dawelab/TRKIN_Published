@@ -14,11 +14,8 @@ colnames(Ab10_GFF) <- c("seqname", "source", "feature", "start", "end", "score",
 
 #This section alters the Ab10 GFF to be compatible with the OrthoFinder Output
 Ab10_GFF_GENE <- subset(Ab10_GFF, feature == "gene")
-
 Ab10_GFF_GENE_temp1 <- separate(Ab10_GFF_GENE, col=attribute, into= c("ID", "biotype", "logic_name"), sep= ';')
-
 Ab10_GFF_GENE_temp1$biotype <-  gsub("Name=", "", Ab10_GFF_GENE_temp1$biotype)
-
 Ab10_GFF_GENE <- Ab10_GFF_GENE_temp1
 
 #remove the scaffolds
