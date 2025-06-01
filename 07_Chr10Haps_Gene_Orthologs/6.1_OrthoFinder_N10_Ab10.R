@@ -7,52 +7,43 @@ library(ggplot2)
 library(pafr)
 library(Rsamtools)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Gene_Orthologs")
+setwd("")
 
-ORTHO <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.Protein.LongestIsoform__v__HiFiAb10.Ab10hapProtein.LongestIsoform.tsv")
+#This is the file generated in the previous step (7.5)
+ORTHO <- read.delim("Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.Protein.LongestIsoform__v__HiFiAb10.Ab10hapProtein.LongestIsoform.tsv")
 
-B73_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.nohead.gff3", header = FALSE)
+#All annotation lines were mannually removed from gff files for compatibility with R
+
+#Load the B73 annotation file associated with https://www.maizegdb.org/genome/assembly/Zm-B73-REFERENCE-NAM-5.0
+B73_GFF <- read.delim("Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.nohead.gff3", header = FALSE)
 colnames(B73_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
-Ab10_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Ab10_HiFi_v2_corrected.gene.v2.gff3", header = FALSE)
+#This the Ab10 annotation from 
+Ab10_GFF <- read.delim("B73_Ab10_HiFi_v2.gene.nohead.gff3", header = FALSE)
 colnames(Ab10_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
-
 
 #This section alters the B73 GFF to be compatible with the OrthoFinder Output
 B73_GFF_GENE <- subset(B73_GFF, feature == "gene")
-
 B73_GFF_GENE_temp1 <- separate(B73_GFF_GENE, col=attribute, into= c("ID", "biotype", "logic_name"), sep= ';')
-
 B73_GFF_GENE_temp2 <- separate(B73_GFF_GENE_temp1, col= ID, into=c("Trash", "ID"), sep="=")
-
 B73_GFF_GENE_temp3 <- B73_GFF_GENE_temp2[,c("seqname", "start", "end", "ID")]
 colnames(B73_GFF_GENE_temp3) <- c("B73_seqname", "B73_start", "B73_end", "B73_ID")
-
 B73_GFF_GENE <- B73_GFF_GENE_temp3
 
 #This section alters the Ab10 GFF to be compatible with the OrthoFinder Output
 Ab10_GFF_GENE <- subset(Ab10_GFF, feature == "gene")
-
 Ab10_GFF_GENE_temp1 <- separate(Ab10_GFF_GENE, col=attribute, into= c("ID", "biotype", "logic_name"), sep= ';')
-
 Ab10_GFF_GENE_temp2 <- separate(Ab10_GFF_GENE_temp1, col= ID, into=c("Trash", "ID"), sep="=")
-
 Ab10_GFF_GENE_temp3 <- Ab10_GFF_GENE_temp2[,c("seqname", "start", "end", "ID")]
 colnames(Ab10_GFF_GENE_temp3) <- c("Ab10_seqname", "Ab10_start", "Ab10_end", "Ab10_ID")
-
 Ab10_GFF_GENE_temp3$Ab10_ID <-  gsub("gene:", "", Ab10_GFF_GENE_temp3$Ab10_ID)
-
 Ab10_GFF_GENE <- Ab10_GFF_GENE_temp3
 
 #This section converts the file so that there is only one gene in each file 
 ORTHO_MELT_temp1 <- cSplit(ORTHO, "Zm.B73.REFERENCE.NAM.5.0_Zm00001eb.1.Protein.LongestIsoform", sep = ",", direction = "long")
-
 ORTHO_MELT_temp2 <- cSplit(ORTHO_MELT_temp1, "HiFiAb10.Ab10hapProtein.LongestIsoform", sep = ",", direction = "long")
-
 ORTHO_MELT_temp3 <- separate(ORTHO_MELT_temp2, col = Zm.B73.REFERENCE.NAM.5.0_Zm00001eb.1.Protein.LongestIsoform, into = c("B73_ID", "B73_Iso"))
-
 ORTHO_MELT_temp4 <- separate(ORTHO_MELT_temp3, col = HiFiAb10.Ab10hapProtein.LongestIsoform , into = c("Ab10_ID", "Ab10_Iso"))
-
 ORTHO_MELT <- ORTHO_MELT_temp4
 
 
@@ -61,15 +52,16 @@ DATA_temp1 <- merge(ORTHO_MELT, B73_GFF_GENE)
 DATA_temp2 <- merge(DATA_temp1, Ab10_GFF_GENE)
 DATA <- DATA_temp2
 
-#This alters the data for KaryoploteR
-GENOME <- read.csv("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Ab10N10_KaryoploteR_genome.csv")
+#This reads in the genome file for KaryoplotR, refer to https://bernatgel.github.io/karyoploter_tutorial//Tutorial/CustomGenomes/CustomGenomes.html for details
+GENOME <- read.csv("Ab10N10_KaryoploteR_genome.csv")
 
+#Select only Ab10 and N10 from the genome file, mine also had K10L2 for simplicity
 GENOME_Ab10 <- subset(GENOME, Chr == "Ab10" | Chr == "N10")
 
 #This makes the Ab10 and N10 genome
 Ab10.genome <- toGRanges(GENOME_Ab10)
 
-#################################################### Orthofinder Plots
+#Orthofinder Plots
 
 #This loads in the links from orthofinder
 OrthoLink_10_temp1 <- subset(DATA, DATA$B73_seqname == "chr10" & DATA$Ab10_seqname == "chr10")
@@ -79,16 +71,14 @@ OrthoLink_10_temp1$Query.Sequence <- paste(OrthoLink_10_temp1$Ab10_ID, OrthoLink
 #This extracts the links between N10 and the Ab10 Specific region of Ab10
 Ab10_SPEC<- subset(OrthoLink_10_temp1, B73_start >= 141187279 & ((Ab10_start >= 142472000 & Ab10_end <= 153145000) | (Ab10_start >= 168235374)))
 
-#This loads in the entap results for the Ab10 annotation
-Ab10_entap <- read.delim("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Ab10_entap_results.tsv")
+#This loads in the entap results for the Ab10 annotation. This file came from 05.12
+Ab10_entap <- read.delim("Ab10_entap_results.tsv")
 
-#This merges the weird links and the entap results
+#This merges the links between N10 and the Ab10 Specific and the entap results
 Ab10_entap_SPEC<- merge(Ab10_SPEC, Ab10_entap, by="Query.Sequence")
 
 #This writes this out
 write.csv(Ab10_entap_SPEC, "N10Ab10Specific_Orthologs.csv", row.names = FALSE, quote = TRUE)
-
-#These are the only other genes within the rpd2 repeats that are highlighted by the above file g5850.t1, g5852.t1, g5855.t1, g5857.t1, g5859.t1, g5861.t1 they are unconvincing with only one having very weak similarity to an uncharacterized protein
 
 #This creates the links color
 Uninverted <- subset(OrthoLink_10_temp1, Ab10_start < 143000000)
@@ -131,7 +121,7 @@ All_end$Ab10_seqname <- "Ab10"
 All_start_range <- toGRanges(All_start)
 All_end_range <- toGRanges(All_end)
 
-#This alters plot parameters, this is actually just the default still
+#This alters plot parameters
 pp <- getDefaultPlotParams(plot.type=1)
 pp$ideogramheight <- 1
 pp$data1height <- 200
@@ -159,12 +149,5 @@ kpPlotLinks(kp, data=Inv1_start_range, data2=Inv1_end_range, r0=-.5, r1 = -.25, 
 kpPlotLinks(kp, data=Inv2_start_range, data2=Inv2_end_range, r0=-.5, r1 = -.25, y= 1.6, col = "aquamarine", border = "aquamarine")
 kpPlotLinks(kp, data=Uninverted2_start_range, data2=Uninverted2_end_range, r0=-.5, r1 = -.25, y= 1.6, col = "aquamarine4", border = "aquamarine4" )
 dev.off()
-
-png(file="N10_Ab10_Orthologes_KaryoploteR_Legend.png", width = 480*4, height = 480*3, units = "px", pointsize = 24, bg = "white")
-kp <- plotKaryotype(genome = Ab10.genome, chromosomes = c("Ab10", "N10"), plot.type=1, plot.params=pp)
-kpAddBaseNumbers(kp)
-dev.off()
-
-
 
 
