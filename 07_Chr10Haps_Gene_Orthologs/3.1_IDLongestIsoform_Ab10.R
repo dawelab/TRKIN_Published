@@ -12,11 +12,8 @@ names(Ab10HapProt) <- c("name", "length", "offset", "linebases", "linewidth")
 #This separates out the name field
 Ab10HapProt <- separate(Ab10HapProt, col = name, into=c("gene", "isoform"), sep="\\.", extra = "merge")
 
-genes <- unique(Ab10HapProt$gene)
-
 #This identifies the longest isoform 
 Long <- Ab10HapProt %>% group_by(Ab10HapProt$gene) %>% arrange(-length) %>% slice(1)
-length(Long$gene)
 Long$ID <- paste(Long$gene, Long$isoform, sep=".")
 
 #Print a list of gene names and numbers of the longest isoforms
