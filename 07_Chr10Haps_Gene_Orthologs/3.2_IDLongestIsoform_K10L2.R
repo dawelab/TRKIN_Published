@@ -14,7 +14,6 @@ K10L2HapProt <- separate(K10L2HapProt, col = name, into=c("gene", "isoform"), se
 
 #This identifies the longest isoform for each gene
 Long <- K10L2HapProt %>% group_by(K10L2HapProt$gene) %>% arrange(-length) %>% slice(1)
-length(Long$gene)
 Long$ID <- paste(Long$gene, Long$isoform, sep=".")
 
 #Print a list of gene names and numbers of the longest isoforms
