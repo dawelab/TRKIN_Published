@@ -3,8 +3,8 @@
    > 1.Ab10
    > 2.K10L2
 2.These scripts extract the protein sequences associated with the genes on driving chr10 haplotypes.
-   > 1.Ab10
-   > 2.K10L2
+   > 1.  Ab10
+   > 2.  K10L2
 3. These scripts identify the longest isoform of proteins on all chr10 haplotypes
   >  1. Ab10
   >  2. K10L2
