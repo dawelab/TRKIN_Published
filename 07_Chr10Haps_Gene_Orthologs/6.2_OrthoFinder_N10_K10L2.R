@@ -7,68 +7,60 @@ library(ggplot2)
 library(pafr)
 library(Rsamtools)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Gene_Orthologs")
+setwd("")
 
-ORTHO <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.Protein.LongestIsoform__v__CI66_K10L2.K10L2hapProtein.LongestIsoform.tsv")
+#This was generated in step 07.5
+ORTHO <- read.delim("Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.Protein.LongestIsoform__v__CI66_K10L2.K10L2hapProtein.LongestIsoform.tsv")
 
-B73_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.nohead.gff3", header = FALSE)
+#I manually removed all commented out lines from the gff files for compatibility with R
+
+#Load the B73 annotation file associated with https://www.maizegdb.org/genome/assembly/Zm-B73-REFERENCE-NAM-5.0
+B73_GFF <- read.delim("Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.nohead.gff3", header = FALSE)
 colnames(B73_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
-K10L2_GFF <- read.delim("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/CI66_K10L2_v1.gene.v2.gff3", header = FALSE)
+#This is the K10L2 annotation from 05.08
+K10L2_GFF <- read.delim("CI66_K10L2_v1.gene.nohead.gff3", header = FALSE)
 colnames(K10L2_GFF) <- c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute")
 
 
 #This section alters the B73 GFF to be compatible with the OrthoFinder Output
 B73_GFF_GENE <- subset(B73_GFF, feature == "gene")
-
 B73_GFF_GENE_temp1 <- separate(B73_GFF_GENE, col=attribute, into= c("ID", "biotype", "logic_name"), sep= ';')
-
 B73_GFF_GENE_temp2 <- separate(B73_GFF_GENE_temp1, col= ID, into=c("Trash", "ID"), sep="=")
-
 B73_GFF_GENE_temp3 <- B73_GFF_GENE_temp2[,c("seqname", "start", "end", "ID")]
 colnames(B73_GFF_GENE_temp3) <- c("B73_seqname", "B73_start", "B73_end", "B73_ID")
-
 B73_GFF_GENE <- B73_GFF_GENE_temp3
 
 #This section alters the K10L2 GFF to be compatible with the OrthoFinder Output
 K10L2_GFF_GENE <- subset(K10L2_GFF, feature == "gene")
-
 K10L2_GFF_GENE_temp1 <- separate(K10L2_GFF_GENE, col=attribute, into= c("ID", "biotype", "logic_name"), sep= ';')
-
 K10L2_GFF_GENE_temp2 <- separate(K10L2_GFF_GENE_temp1, col= ID, into=c("Trash", "ID"), sep="=")
-
 K10L2_GFF_GENE_temp3 <- K10L2_GFF_GENE_temp2[,c("seqname", "start", "end", "ID")]
 colnames(K10L2_GFF_GENE_temp3) <- c("K10L2_seqname", "K10L2_start", "K10L2_end", "K10L2_ID")
-
 K10L2_GFF_GENE_temp3$K10L2_ID <-  gsub("gene:", "", K10L2_GFF_GENE_temp3$K10L2_ID)
-
 K10L2_GFF_GENE <- K10L2_GFF_GENE_temp3
 
 #This section converts the file so that there is only one gene in each file 
 ORTHO_MELT_temp1 <- cSplit(ORTHO, "Zm.B73.REFERENCE.NAM.5.0_Zm00001eb.1.Protein.LongestIsoform", sep = ",", direction = "long")
-
 ORTHO_MELT_temp2 <- cSplit(ORTHO_MELT_temp1, "CI66_K10L2.K10L2hapProtein.LongestIsoform", sep = ",", direction = "long")
-
 ORTHO_MELT_temp3 <- separate(ORTHO_MELT_temp2, col = Zm.B73.REFERENCE.NAM.5.0_Zm00001eb.1.Protein.LongestIsoform, into = c("B73_ID", "B73_Iso"))
-
 ORTHO_MELT_temp4 <- separate(ORTHO_MELT_temp3, col = CI66_K10L2.K10L2hapProtein.LongestIsoform , into = c("K10L2_ID", "K10L2_Iso"))
-
 ORTHO_MELT <- ORTHO_MELT_temp4
 
 #This section merges the GFF files with the OrthoFinder Files
 DATA_temp1 <- merge(ORTHO_MELT, B73_GFF_GENE)
 DATA_temp2 <- merge(DATA_temp1, K10L2_GFF_GENE)
 DATA <- DATA_temp2
-
-#This alters the data for KaryoploteR
+#This reads in the genome file for KaryoplotR, refer to https://bernatgel.github.io/karyoploter_tutorial//Tutorial/CustomGenomes/CustomGenomes.html for details
 GENOME <- read.csv("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/OrthoFinder/K10L2N10_KaryoploteR_genome.csv")
 
+#Select only K10L2 and N10 from the genome file, mine also had Ab10 for simplicity
 GENOME_K10L2 <- subset(GENOME, Chr == "K10L2" | Chr == "N10")
 
 #This makes the K10L2 and N10 genome
 K10L2.genome <- toGRanges(GENOME_K10L2)
 
-#################################################### Orthofinder Plots
+# Orthofinder Plots
 
 #This loads in the links from orthofinder
 OrthoLink_10_temp1 <- subset(DATA, DATA$B73_seqname == "chr10" & DATA$K10L2_seqname == "K10L2")
@@ -81,6 +73,7 @@ All_end$K10L2_seqname <- "K10L2"
 All_start_range <- toGRanges(All_start)
 All_end_range <- toGRanges(All_end)
 
+#This separates the regions so that they can be colored differently later
 Uninverted <- subset(OrthoLink_10_temp1, B73_start > 141210513-1000 & B73_end < 142645291+1000)
 Uninverted_start <- Uninverted[,c("K10L2_seqname", "K10L2_start", "K10L2_end")]
 Uninverted_end <- Uninverted[,c("B73_seqname", "B73_start", "B73_end")]
@@ -113,7 +106,7 @@ Uninverted2_end$B73_seqname <- "N10"
 Uninverted2_start_range <- toGRanges(Uninverted2_start)
 Uninverted2_end_range <- toGRanges(Uninverted2_end)
 
-#This alters plot parameters, this is actually just the default still
+#This alters plot parameters
 pp <- getDefaultPlotParams(plot.type=1)
 pp$ideogramheight <- 1
 pp$data1height <- 200
