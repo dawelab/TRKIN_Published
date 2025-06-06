@@ -1,9 +1,9 @@
 library(readxl)
 library(ggplot2)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/GFP")
+setwd("")
 
-GFP_Seg <- read_excel("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/GFP_Seg.xlsx")
+GFP_Seg <- read_excel("GFP_Seg.xlsx")
 
 model1 <- aov(GFP_Seg ~ Genotype, data=GFP_Seg)
 
