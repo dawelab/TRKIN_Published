@@ -1,4 +1,4 @@
-GFP_Seg <- read_excel("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/GFP_Seg.xlsx")
+GFP_Seg <- read_excel("GFP_Seg.xlsx")
 
 model1 <- aov(GFP_Seg ~ Genotype, data=GFP_Seg)
 
