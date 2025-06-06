@@ -5,21 +5,22 @@ library(ggpubr)
 library(gvlma)
 library(EnvStats)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R Sessions/Paper/TRKIN_Published/Comp_Assay")
+setwd("")
 
-DATA_1 <- read_excel("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/Ab10_K10L2_Competition_Data_Reformat.xlsx")
+#Load the data
+DATA_1 <- read_excel("Ab10_K10L2_Competition_Data_Reformat.xlsx")
 DATA_1$Round <- 1
 
-DATA_2 <- read_excel("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/Ab10_K10L2_Competition_Data_round2.xlsx")
+DATA_2 <- read_excel("Ab10_K10L2_Competition_Data_round2.xlsx")
 DATA_2$Round <- 2
 #This drops the Ab10+ K10L2- class because they all carried Cas9 which negated the results. 
 DATA_2 <- subset(DATA_2, Genotype != "Ab10-I trkin + K10L2 trkin -")
 
 
-DATA_3 <- read_excel("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/trkin_Competition_Assay_Summer_2024.xlsx")
+DATA_3 <- read_excel("trkin_Competition_Assay_Summer_2024.xlsx")
 DATA_3$Round <- 3
 
-DATA_4 <- read_excel("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/Ab10_K10L2_CompAssay_Round4.xlsx")
+DATA_4 <- read_excel("=Ab10_K10L2_CompAssay_Round4.xlsx")
 DATA_4$Round <- 4
 
 DATA <- rbind(DATA_1, DATA_2, DATA_3, DATA_4)
@@ -34,9 +35,10 @@ DATA$Genotype <- factor(DATA$Genotype, levels=c("True Positive", "Ab10-I trkin +
 DATA$Drive <- as.numeric(DATA$Drive)
 DATA$Total <- as.numeric(DATA$Total)
 
-
+#Perform the stats
 model <- pairwise.wilcox.test(DATA$Drive, DATA$Genotype)
 
+#Isolate the p values
 SIG <- as.data.frame(model$p.value)
 
 #This writes out the significance table
@@ -51,6 +53,7 @@ x.labels <- c("Ab10\n1(+) 2(+)\n K10L2\n (+)", "Ab10\n1(+) 2(-)\n K10L2\n (+)", 
 
 SIG <- data.frame(Genotype = c("True Positive", "Ab10-I trkin + K10L2 trkin +", "Ab10-I trkin - K10L2 trkin -", "Ab10-I trkin - K10L2 trkin +", "Ab10-I trkin + K10L2 trkin -", "Ab10-I trkin - N10", "Ab10-I trkin + N10"), y=c(rep(1,7)), Label=c("a", "b", "c", "a,b", "d", "c", "c,d"))
 
+#Plot
 pdf("Effect_Of_trkin_on_Ab10K10L2_Seg_AllComp.pdf", height = 6, width=9.5)
 a <- ggplot() +
   geom_jitter(data=DATA, aes(x =Genotype, y = Prop_Drive, color = Round, size= Total), alpha=0.7) +
@@ -65,7 +68,7 @@ a
 dev.off()
 
 
-
+#Plot
 pdf("Effect_Of_trkin_on_Ab10K10L2_Seg_AllComp_Bars.pdf", height = 6, width=9.5)
 a <- ggplot(DATA, aes(x =Genotype, y = Prop_Drive)) +
   geom_jitter(aes(x =Genotype, y = Prop_Drive, color = Round, size= Total, shape = Cas9), alpha=0.7) +
@@ -96,8 +99,3 @@ a <- ggplot(DATA, aes(x =Genotype, y = Prop_Drive)) +
   theme(axis.title = element_text(size = 20), axis.text.y = element_text(size = 18), axis.text.x = element_text(size = 18), legend.title = element_text(size = 20), legend.text = element_text(size = 18), legend.position = "right")
 a
 dev.off()
-
-#This performs a t test looking for differences between only the two positive controls in only season 4
-DATA_4_SUB1 <- subset(DATA_4, Genotype == "True Positive")
-DATA_4_SUB2 <- subset(DATA_4, Genotype == "Ab10-I trkin + K10L2 trkin +" )
-t.test(DATA_4_SUB1$Drive, DATA_4_SUB2$Drive )
