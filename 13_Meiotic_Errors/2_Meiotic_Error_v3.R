@@ -3,9 +3,9 @@ library("readxl")
 library("reshape2")
 library(gvlma)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R\ Sessions/Paper/TRKIN_Published/Meiotic_Errors")
+setwd("")
 
-DATA <- read_excel("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/Micronuclei_Count_format2.xlsx")
+DATA <- read_excel("Micronuclei_Count_format2.xlsx")
 
 DATA <- subset(DATA, Error_Type != "Minicell/Tetrad Cell")
 
