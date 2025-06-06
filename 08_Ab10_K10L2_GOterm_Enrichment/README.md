@@ -7,7 +7,8 @@
 
 3.1  This scripts calculates GO term enrichment for the K10L2 specific region.
    >  3.2 The output of enriched GO terms for the K10L2 specific region.
-    
+
+
 4. This plots the GO term enrichment data for the Ab10 specific region.
 5. This plots the GO term enrichment data for the Ab10 specific region excluding known tandem duplicate genes.
 6. This plots the GO term enrichment data for K10L2.
