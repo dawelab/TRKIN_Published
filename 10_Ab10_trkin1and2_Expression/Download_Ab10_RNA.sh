@@ -1,15 +1,4 @@
-#!/bin/bash
-#SBATCH --partition=batch 
-#SBATCH -J Download_Gapless_RNA
-#SBATCH --output Download_Gapless_RNA.out
-#SBATCH --mem=10GB
-#SBATCH --time=10:00:00
-#SBATCH	--nodes=1
-#SBATCH	--ntasks=30
-#SBATCH --mail-user=meghan.brady@uga.edu
-#SBATCH --mail-type=END
-
-cd /scratch/mjb51923/raw_reads/RNA/Gapless_B73-Ab10I
+#This data comes from https://doi.org/10.1186/s13059-020-02029-9
 
 wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/run/ERR380/ERR3801510/B73Ab10_V11_middle_MN02041_R2.fq.gz
 wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/run/ERR380/ERR3801514/B73Ab10_V18_tassel_MN02061_R1.fq.gz
