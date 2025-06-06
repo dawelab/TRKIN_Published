@@ -1,25 +1,13 @@
-#!/usr/bin/bash
-#SBATCH --partition=batch
-#SBATCH -J HISAT2_B73_Ab10
-#SBATCH --output HISAT2_B73_Ab10.%A-%a.out
-#SBATCH --mem=300GB
-#SBATCH --time=72:00:00
-#SBATCH	--nodes=1
-#SBATCH	--ntasks=19
-#SBATCH --mail-user=meghan.brady@uga.edu
-#SBATCH --mail-type=BEGIN,END
-#SBATCH --array=1-20
-
 #load modules
 module load HISAT2/3n-20201216-gompi-2022a
 module load SAMtools/1.16.1-GCC-11.3.0
 
 #Define Variables
-READ_DIR="/scratch/mjb51923/raw_reads/RNA/Gapless_B73-Ab10I"
-OUT_DIR="/scratch/mjb51923/TRKIN_CRISPR/out_paper/B73_Ab10_RNA"
-REF=/scratch/mjb51923/ref_genomes/Ab10_HiFi_v2_corrected.fa
+READ_DIR="/path/to/reads/from/step1"
+OUT_DIR="/"
+REF=B73_Ab10_HiFi_v2.fa
 #This pulls info from the array job
-FILE=$(awk NR==${SLURM_ARRAY_TASK_ID}'{print $1}' /scratch/mjb51923/TRKIN_CRISPR/TRKIN_Published/trkin1and2_Expression/Tissue_List.txt)
+FILE=$(awk NR==${SLURM_ARRAY_TASK_ID}'{print $1}' Tissue_List.txt)
 
 #Build the reference
 #hisat2-build $REF $REF
