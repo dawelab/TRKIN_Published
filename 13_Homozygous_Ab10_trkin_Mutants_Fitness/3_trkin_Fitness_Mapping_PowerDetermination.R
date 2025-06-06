@@ -2,7 +2,7 @@ library(readxl)
 library(ggplot2)
 library(gvlma)
 
-DATA <- read_excel("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/Trkin_MappingPopulation_v2.xlsx")
+DATA <- read_excel("Trkin_MappingPopulation_v2.xlsx")
 DATA$`Height (cm)` <- as.numeric(DATA$`Height (cm)`)
 DATA$`Height_Bin` <- as.factor(DATA$`Height_Bin`)
 DATA$Pot <- as.factor(DATA$Pot)
