@@ -3,4 +3,3 @@
 2. This script analyzes the data
 3. This script determines what effect size we had 80% power to detect
 
-  All other files are raw output images.
