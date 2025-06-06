@@ -6,14 +6,14 @@ library(readxl)
 library(gvlma)
 library(gamlss)
 
-setwd("/Users/user/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/R\ Sessions/Paper/TRKIN_Published/Drive_Test")
+setwd("")
 
 #This loads in the data from the seed counts
-DATA <- read.csv("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/Hawaii_Seed_Count.csv")
+DATA <- read.csv("Hawaii_Seed_Count.csv")
 colnames(DATA) <- c("Number", "Individual", "R_(purple)", "R_Counter", "r_(yellow)", "r_Counter", "Total", "Sorter", "Sort_Date", "Date_Counted", "Person_Counting", "Drive", "Number_Defective_Kernels", "Prop_Defective", "Defective_Date", "Defective_Number_that_Day", "Notes")
 
 #This loads in the field data
-MAP <- read_excel("~/University_of_Georgia/Dawe_Lab_Documents/Trkin_CRISPR/Hawaii_MappingFile_v2.xlsx")
+MAP <- read_excel("Hawaii_MappingFile_v2.xlsx")
 colnames(MAP) <- c("Genotype", "Number", "MB_Number", "Event_Number", "Column_Number", "Row_Number", "Edge")
 
 #This merges the seed count and field data
